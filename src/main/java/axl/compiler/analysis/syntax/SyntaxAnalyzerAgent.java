@@ -4,7 +4,7 @@ import axl.compiler.analysis.lexical.TokenType;
 import axl.compiler.analysis.syntax.ast.Argument;
 import axl.compiler.analysis.syntax.ast.Function;
 import axl.compiler.analysis.syntax.ast.expression.*;
-import axl.compiler.analysis.syntax.ast.expression.Number;
+import axl.compiler.analysis.syntax.ast.expression.NumberExpression;
 import axl.compiler.analysis.syntax.ast.statement.Block;
 import axl.compiler.analysis.syntax.ast.statement.ConditionStatement;
 import axl.compiler.analysis.syntax.ast.statement.ReturnStatement;
@@ -44,7 +44,9 @@ public class SyntaxAnalyzerAgent {
         // высокий приоритет ^^^
 
         // так надо VVV
-        syntaxAnalyzer.addAnalyzer(new Number.NumberAnalyzer());
+        syntaxAnalyzer.addAnalyzer(new NumberExpression.NumberExpressionAnalyzer());
+        syntaxAnalyzer.addAnalyzer(new CharExpression.CharExpressionAnalyzer());
+        syntaxAnalyzer.addAnalyzer(new StringExpression.StringExpressionAnalyzer());
         syntaxAnalyzer.addAnalyzer(new VariableUseExpression.VariableUseAnalyzer());
 
         return syntaxAnalyzer;

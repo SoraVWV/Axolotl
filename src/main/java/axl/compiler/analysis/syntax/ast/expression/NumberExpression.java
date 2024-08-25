@@ -11,17 +11,17 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Number extends Expression {
+public class NumberExpression extends Expression {
     private IToken number;
 
-    @SubAnalyzer(target = Number.class)
-    public static class NumberAnalyzer extends Analyzer {
+    @SubAnalyzer(target = NumberExpression.class)
+    public static class NumberExpressionAnalyzer extends Analyzer {
         @Override
         public Node analyze(SyntaxAnalyzer syntaxAnalyzer, TokenStream tokenStream) {
             return switch (tokenStream.get().getType()) {
                 case DEC_NUMBER, BIN_LONG_NUMBER, BIN_NUMBER, DEC_LONG_NUMBER, DOUBLE_EXP_NUMBER, DOUBLE_NUMBER, FLOAT_EXP_NUMBER, FLOAT_NUMBER, HEX_LONG_NUMBER, HEX_NUMBER -> {
                     IToken token = tokenStream.next();
-                    yield new Number(token);
+                    yield new NumberExpression(token);
                 }
                 default -> null;
             };
@@ -30,7 +30,7 @@ public class Number extends Expression {
 
     @Override
     public String toString() {
-        return "Number{" +
+        return "NumberExpression{" +
                 "number=" + number.getType() +
                 '}';
     }

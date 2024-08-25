@@ -45,6 +45,10 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
             token = readIdentifyOrKeyword();
         else if (isNumber(peek()) || peek() == '.')
             token = readNumber();
+        else if (peek() == '"')
+            token = readString();
+        else if (peek() == '\'')
+            token = readChar();
         else
             token = readDelimiterOrOperator();
 
@@ -56,6 +60,26 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
         skip();
         lastToken = token;
         return token;
+    }
+
+    private DefaultToken readString() {
+        char prev = '\\';
+        while (peek() != '"' || prev == '\\') {
+            prev = peek();
+            next();
+        }
+        next();
+        return new DefaultToken(TokenType.STRING_LITERAL);
+    }
+
+    private DefaultToken readChar() {
+        char prev = '\\';
+        while (peek() != '\'' || prev == '\\') {
+            prev = peek();
+            next();
+        }
+        next();
+        return new DefaultToken(TokenType.CHAR_LITERAL);
     }
 
     private DefaultToken readIdentifyOrKeyword() {
