@@ -10,14 +10,11 @@ import java.util.List;
 
 public interface TokenStream {
 
-    @NonNull
-    IFile getFile();
+    @NonNull IFile getFile();
 
-    @Nullable
-    Token next();
+    @Nullable Token next();
 
-    @Nullable
-    Token get();
+    @Nullable Token get();
 
     boolean hasNext();
 
@@ -25,14 +22,11 @@ public interface TokenStream {
 
     boolean nextTokenTypeNot(TokenType compare);
 
-    @NonNull
-    Frame createFrame();
+    @NonNull Frame createFrame();
 
     void restoreFrame(@NonNull Frame frame);
 
-    @NonNull
-    TokenStream createSubStream(Frame start, Frame end);
+    @NonNull TokenStream createSubStream(Frame start, Frame end);
 
-    @NonNull
-    List<Token> copy();
+    @NonNull List<Token> copy();
 }

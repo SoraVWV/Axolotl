@@ -6,6 +6,7 @@ import lombok.NonNull;
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
 public enum TokenType {
 
     LEFT_PARENT(TokenGroup.DELIMITER, "("),
@@ -90,6 +91,7 @@ public enum TokenType {
     WHILE(TokenGroup.KEYWORD, "while"),
     SWITCH(TokenGroup.KEYWORD, "switch"),
     CASE(TokenGroup.KEYWORD, "case"),
+    IS(TokenGroup.KEYWORD, "is"),
 
     IDENTIFY(TokenGroup.IDENTIFY),
 
@@ -106,10 +108,8 @@ public enum TokenType {
     CHAR_LITERAL(TokenGroup.LITERAL),
     STRING_LITERAL(TokenGroup.LITERAL);
 
-    @Getter
     private final TokenGroup group;
 
-    @Getter
     private final String representation;
 
     TokenType(TokenGroup group, String representation) {
@@ -122,27 +122,9 @@ public enum TokenType {
         this.representation = null;
     }
 
-    public static List<TokenType> delimiters() {
-        return Arrays.stream(TokenType.values())
-                .filter(type -> type.group == TokenGroup.DELIMITER)
-                .toList();
-    }
-
-    public static List<TokenType> operators() {
-        return Arrays.stream(TokenType.values())
-                .filter(type -> type.group == TokenGroup.OPERATOR)
-                .toList();
-    }
-
     public static List<TokenType> delimitersAndOperators() {
         return Arrays.stream(TokenType.values())
                 .filter(type -> type.group == TokenGroup.DELIMITER || type.group == TokenGroup.OPERATOR)
-                .toList();
-    }
-
-    public static List<TokenType> keywords() {
-        return Arrays.stream(TokenType.values())
-                .filter(type -> type.group == TokenGroup.KEYWORD)
                 .toList();
     }
 

@@ -14,8 +14,7 @@ import java.util.List;
 public class DefaultTokenStream implements TokenStream {
 
     @Getter
-    @NonNull
-    private final IFile file;
+    private final @NonNull IFile file;
 
     private final List<Token> tokens;
 
@@ -29,6 +28,7 @@ public class DefaultTokenStream implements TokenStream {
         this.file = file;
         this.tokens = tokens;
         this.tokenizer = tokenizer;
+        this.processed = tokenizer.isProcessed();
     }
 
     private DefaultTokenStream(@NonNull IFile file, @NonNull List<Token> tokens, boolean processed) {
@@ -39,8 +39,7 @@ public class DefaultTokenStream implements TokenStream {
     }
 
     @Override
-    @Nullable
-    public Token next() {
+    public @Nullable Token next() {
         if (iterator < tokens.size())
             return tokens.get(iterator++);
 
@@ -51,8 +50,7 @@ public class DefaultTokenStream implements TokenStream {
         return next();
     }
 
-    @Nullable
-    public TokenType nextTokenType() {
+    public @Nullable TokenType nextTokenType() {
         Token next = next();
         if (next == null)
             return null;
@@ -70,9 +68,8 @@ public class DefaultTokenStream implements TokenStream {
         return nextTokenType() != compare;
     }
 
-    @Nullable
     @Override
-    public Token get() {
+    public @Nullable Token get() {
         if (iterator < tokens.size())
             return tokens.get(iterator);
 
@@ -88,9 +85,9 @@ public class DefaultTokenStream implements TokenStream {
         return !this.processed || this.iterator < tokens.size();
     }
 
-    @NonNull
+
     @Override
-    public Frame createFrame() {
+    public @NonNull Frame createFrame() {
         return new DefaultFrame(iterator);
     }
 
@@ -99,9 +96,8 @@ public class DefaultTokenStream implements TokenStream {
         this.iterator = frame.getTokenId();
     }
 
-    @NonNull
     @Override
-    public TokenStream createSubStream(@NonNull Frame start, @NonNull Frame end) {
+    public @NonNull TokenStream createSubStream(@NonNull Frame start, @NonNull Frame end) {
         List<Token> tokens = this.tokens.subList(
                 start.getTokenId(),
                 end.getTokenId() - 1
@@ -109,9 +105,8 @@ public class DefaultTokenStream implements TokenStream {
         return new DefaultTokenStream(file, tokens, true);
     }
 
-    @NonNull
     @Override
-    public List<Token> copy() {
+    public @NonNull List<Token> copy() {
         return new ArrayList<>(this.tokens);
     }
 

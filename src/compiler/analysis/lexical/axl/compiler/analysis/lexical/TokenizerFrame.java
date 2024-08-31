@@ -2,10 +2,9 @@ package axl.compiler.analysis.lexical;
 
 public interface TokenizerFrame {
 
-    int getLine();
+    int line();
 
-    int getColumn();
+    int column();
 
-    int getOffset();
-
+    int offset();
 }

@@ -13,9 +13,7 @@ public interface Token {
 
     int getColumn();
 
-    @NonNull
-    TokenType getType();
+    @NonNull TokenType getType();
 
-    @NonNull
-    String getContent(IFile file);
+    @NonNull String getContent(IFile file);
 }

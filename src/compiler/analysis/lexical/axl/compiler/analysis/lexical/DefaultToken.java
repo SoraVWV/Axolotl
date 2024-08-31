@@ -2,6 +2,7 @@ package axl.compiler.analysis.lexical;
 
 import axl.compiler.IFile;
 import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 
 @Getter
 public class DefaultToken implements Token {
@@ -21,7 +22,7 @@ public class DefaultToken implements Token {
     }
 
     @Override
-    public String getContent(IFile file) {
+    public @NotNull String getContent(IFile file) {
         return file
                 .getContent()
                 .substring(

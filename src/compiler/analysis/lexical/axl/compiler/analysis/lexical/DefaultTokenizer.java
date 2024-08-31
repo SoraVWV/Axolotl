@@ -18,28 +18,17 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
 
     private int column = 1;
 
-    private DefaultTokenizerFrame frame;
+    private TokenizerFrame frame;
 
-    @Nullable
-    private Token lastToken;
+    private @Nullable Token lastToken;
 
     public DefaultTokenizer(@NonNull IFile file) {
         this.file = file;
         skip();
     }
 
-    public DefaultTokenizer(@NonNull IFile file, @NonNull Token last) {
-        this.file = file;
-        this.lastToken = last;
-        this.offset = last.getOffset();
-        this.line = last.getLine();
-        next(last.getLength());
-        skip();
-    }
-
-    @NonNull
     @Override
-    public Token tokenize() {
+    public @NonNull Token tokenize() {
         createFrame();
         if (end())
             throw new IllegalStateException();
@@ -57,10 +46,10 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
         else
             token = readDelimiterOrOperator();
 
-        token.offset = frame.getOffset();
-        token.column = frame.getColumn();
-        token.line = frame.getLine();
-        token.length = this.offset - frame.getOffset();
+        token.offset = frame.offset();
+        token.column = frame.column();
+        token.line = frame.line();
+        token.length = this.offset - frame.offset();
 
         skip();
         lastToken = token;
@@ -68,31 +57,67 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
         return token;
     }
 
-    @NonNull
-    private DefaultToken readString() {
-        char prev = '\\';
-        while (peek() != '"' || prev == '\\') {
-            prev = peek();
-            next();
+    private @NonNull DefaultToken readString() {
+        next();
+        while (peek() != '"') {
+            if (end())
+                throw new IllegalSourceException("String literal is not completed", this, frame);
+
+            if (peek() == '\\')
+                readEscape('"');
+            else
+                next();
         }
         next();
+
         return new DefaultToken(TokenType.STRING_LITERAL);
     }
 
-    @NonNull
-    private DefaultToken readChar() {
-        char prev = '\\';
-        while (peek() != '\'' || prev == '\\') {
-            prev = peek();
-            next();
-        }
-
+    private @NonNull DefaultToken readChar() {
         next();
+
+        if (peek() == '\\')
+            readEscape('\'');
+        else
+            next();
+
+        if (next() != '\'')
+            throw new IllegalSourceException("Symbol literal is not completed", this, frame);
+
         return new DefaultToken(TokenType.CHAR_LITERAL);
     }
 
-    @NonNull
-    private DefaultToken readIdentifyOrKeyword() {
+    private void readEscape(char allowed) {
+        TokenizerFrame localFrame = currentFrame();
+
+        next();
+        switch (peek()) {
+            case '\'':
+            case '"':
+                if (peek() != allowed)
+                    break;
+            case 'n':
+            case 't':
+            case 'r':
+            case '0':
+            case '\\':
+                next();
+                return;
+            case 'u':
+                next();
+                for (int i = 0; i < 4; i++) {
+                    if (isHexNumber(next()))
+                        continue;
+
+                    throw new IllegalSourceException("Invalid unicode", this, localFrame);
+                }
+                return;
+        }
+
+        throw new IllegalSourceException("Invalid escape sequence", this, localFrame);
+    }
+
+    private @NonNull DefaultToken readIdentifyOrKeyword() {
         do {
             next();
         } while (isIdentifierPart(peek()));
@@ -101,8 +126,7 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
         return new DefaultToken(type == null ? TokenType.IDENTIFY : type);
     }
 
-    @NonNull
-    private DefaultToken readNumber() {
+    private @NonNull DefaultToken readNumber() {
         if (peek(0) == '0') {
             if (peek(1) == 'x' || peek(1) == 'X')
                 return readHexNumber();
@@ -129,7 +153,6 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
         return readDecNumber();
     }
 
-    @NonNull
     private DefaultToken readHexNumber() {
         next(2);
         int cnt = 0;
@@ -145,7 +168,7 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
 
         boolean lastUnderscore = false;
 
-        for(;;) {
+        for (; ; ) {
             if (isHexNumber(peek())) {
                 lastUnderscore = false;
                 if (peek() != '0' && zeroStart) {
@@ -153,8 +176,7 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
                     cnt++;
                 }
                 next();
-            }
-            else if (peek() == '_') {
+            } else if (peek() == '_') {
                 lastUnderscore = true;
                 next();
             } else {
@@ -178,8 +200,7 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
         return new DefaultToken(TokenType.HEX_NUMBER);
     }
 
-    @NonNull
-    private DefaultToken readBinNumber() {
+    private @NonNull DefaultToken readBinNumber() {
         next(2);
         int cnt = 0;
         boolean zeroStart = true;
@@ -193,7 +214,7 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
 
         boolean lastUnderscore = false;
 
-        for(;;) {
+        for (; ; ) {
             if (isBinNumber(peek())) {
                 lastUnderscore = false;
                 if (peek() != '0' && zeroStart) {
@@ -201,8 +222,7 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
                     cnt++;
                 }
                 next();
-            }
-            else if (peek() == '_') {
+            } else if (peek() == '_') {
                 lastUnderscore = true;
                 next();
             } else {
@@ -228,8 +248,7 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
         return new DefaultToken(TokenType.BIN_NUMBER);
     }
 
-    @NonNull
-    private DefaultToken readDecNumber() {
+    private @NonNull DefaultToken readDecNumber() {
         readDecPart(true);
 
         if (peek() == '.' || peek() == 'E' || peek() == 'e')
@@ -244,8 +263,7 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
         return new DefaultToken(TokenType.DEC_NUMBER);
     }
 
-    @NonNull
-    private DefaultToken readFloatingPointNumber() {
+    private @NonNull DefaultToken readFloatingPointNumber() {
         restoreFrame();
 
         boolean exp = false;
@@ -284,7 +302,7 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
         boolean lastUnderscore = false;
         boolean hasNumber = false;
 
-        for (;;) {
+        for (; ; ) {
             if (isNumber(peek())) {
                 lastUnderscore = false;
                 firstUnderscore = false;
@@ -308,12 +326,11 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
             throw new IllegalSourceException("Numeric literal cannot have an underscore as it's last character", this, frame);
     }
 
-    @NonNull
-    private DefaultToken readDelimiterOrOperator() {
+    private @NonNull DefaultToken readDelimiterOrOperator() {
         int currentLength = 0;
         TokenType current = null;
 
-        for (TokenType type: TokenType.delimitersAndOperators()) {
+        for (TokenType type : TokenType.delimitersAndOperators()) {
             String representation = type.getRepresentation();
             if (!isOperator(representation))
                 continue;
@@ -330,11 +347,11 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
         if (current == TokenType.MINUS) {
             if (
                     lastToken == null ||
-                    lastToken.getType().getGroup() == TokenGroup.OPERATOR ||
-                    lastToken.getType() == TokenType.LEFT_PARENT ||
-                    lastToken.getType() == TokenType.LEFT_SQUARE ||
-                    lastToken.getType() == TokenType.RETURN ||
-                    lastToken.getType() == TokenType.THIS
+                            lastToken.getType().getGroup() == TokenGroup.OPERATOR ||
+                            lastToken.getType() == TokenType.LEFT_PARENT ||
+                            lastToken.getType() == TokenType.LEFT_SQUARE ||
+                            lastToken.getType() == TokenType.RETURN ||
+                            lastToken.getType() == TokenType.THIS
             )
                 current = TokenType.UNARY_MINUS;
         }
@@ -352,35 +369,34 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
     }
 
     private void skip() {
-        for (;;) {
-            if (peek(0) == '/' && peek(1) == '*') {
-                createFrame(); // necessary to display lexical errors
+        for (; ; ) {
+            if (peek(0) == '/' && peek(1) == '*')
                 readMultilineComment();
-            } else if (peek(0) == '/' && peek(1) == '/') {
+            else if (peek(0) == '/' && peek(1) == '/')
                 readSingleComment();
-            } else if (peek() == ' ' || peek() == '\t' || peek() == '\n' || peek() == '\r') {
+            else if (peek() == ' ' || peek() == '\t' || peek() == '\n' || peek() == '\r')
                 next();
-            } else {
+            else
                 break;
-            }
         }
     }
 
     private void readSingleComment() {
         next(2);
 
-        while (peek() != '\r' && peek() != '\n' && peek() !='\0')
+        while (peek() != '\r' && peek() != '\n' && peek() != '\0')
             next();
 
         next();
     }
 
     private void readMultilineComment() {
+        TokenizerFrame localFrame = currentFrame();
         next(2);
 
         while (peek(0) != '*' || peek(1) != '/') {
             if (end())
-                throw new IllegalSourceException("Multiline comment was not closed", this, frame);
+                throw new IllegalSourceException("Multiline comment was not closed", this, localFrame);
 
             next();
         }
@@ -422,24 +438,27 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
         return offset >= file.getContent().length();
     }
 
-    @NonNull
-    private String slice() {
+    private @NonNull String slice() {
         return getFile()
                 .getContent()
                 .substring(
-                        frame.getOffset(),
+                        frame.offset(),
                         this.offset
                 );
     }
 
     private void createFrame() {
-        this.frame = new DefaultTokenizerFrame(offset, line, column);
+        this.frame = currentFrame();
     }
 
     private void restoreFrame() {
-        this.offset = frame.getOffset();
-        this.column = frame.getColumn();
-        this.line = frame.getLine();
+        this.offset = frame.offset();
+        this.column = frame.column();
+        this.line = frame.line();
+    }
+
+    private TokenizerFrame currentFrame() {
+        return new DefaultTokenizerFrame(offset, line, column);
     }
 
     @Override
@@ -447,4 +466,3 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
         return end();
     }
 }
-

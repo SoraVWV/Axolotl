@@ -1,10 +1,6 @@
 package axl.compiler;
 
-import axl.compiler.analysis.lexical.utils.Frame;
 import axl.compiler.analysis.lexical.utils.TokenStream;
-import axl.compiler.analysis.syntax.SyntaxAnalyzer;
-import axl.compiler.analysis.syntax.SyntaxAnalyzerAgent;
-import axl.compiler.analysis.syntax.ast.Node;
 import lombok.SneakyThrows;
 
 import java.io.File;
@@ -22,19 +18,14 @@ public class Main {
         file = new axl.compiler.File(filename, content);
 
         TokenStream stream = file.createTokenStream();
-        SyntaxAnalyzer syntaxAnalyzer = SyntaxAnalyzerAgent.createSyntaxAnalyzer();
-        Frame frame = stream.createFrame();
-        long point = System.currentTimeMillis();
-        Node add = syntaxAnalyzer.analyze(stream);
-        long time = ((int) (System.currentTimeMillis() - point));
 
-        System.out.println(formatString(add.toString()));
+        long point = System.currentTimeMillis();
+        while (stream.hasNext())
+            stream.next();
+        long time = ((int) (System.currentTimeMillis() - point));
 
         System.out.println((int) time + " ms");
 
-        stream.restoreFrame(frame);
-        while (stream.hasNext())
-            stream.next();
     }
 
     public static String formatString(String input) {
