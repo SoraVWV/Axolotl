@@ -1,6 +1,8 @@
 package axl.compiler;
 
 import axl.compiler.analysis.lexical.utils.TokenStream;
+import axl.compiler.analysis.syntax.SyntaxAnalyzer;
+import axl.compiler.analysis.syntax.ast.Node;
 import lombok.SneakyThrows;
 
 import java.io.File;
@@ -26,9 +28,21 @@ public class Main {
 
         System.out.println((int) time + " ms");
 
+        parse();
     }
 
-    public static String formatString(String input) {
+    private static void parse() {
+        TokenStream stream = file.createTokenStream();
+        SyntaxAnalyzer analyzer = SyntaxAnalyzerAgent.createSyntaxAnalyzer();
+        Node root = analyzer.analyze(stream);
+        System.out.println(formatString(root));
+    }
+
+    public static String formatString(Object obj) {
+        if (obj == null)
+            return "null";
+
+        String input = obj.toString();
         input = input.replace(" ", "");
         StringBuilder formatted = new StringBuilder();
         int indentLevel = 0;

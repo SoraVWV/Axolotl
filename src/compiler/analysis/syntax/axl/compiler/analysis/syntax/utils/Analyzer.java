@@ -1,34 +1,62 @@
 package axl.compiler.analysis.syntax.utils;
 
-import axl.compiler.analysis.lexical.utils.TokenStream;
-import axl.compiler.analysis.syntax.SyntaxAnalyzer;
-import axl.compiler.analysis.syntax.ast.Node;
-import axl.compiler.analysis.syntax.ast.expression.Expression;
-import lombok.Getter;
+import axl.compiler.analysis.lexical.TokenType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public abstract class Analyzer {
+import java.util.ArrayList;
+import java.util.List;
 
-    {
-        SubAnalyzer subAnalyzer = this.getClass().getAnnotation(SubAnalyzer.class);
-        if (subAnalyzer == null)
-            throw new IllegalArgumentException("The analyzer \"" + this.getClass().getName() + "\" must have an annotation \"" + SubAnalyzer.class.getName() + "\"!");
+@Data
+@NoArgsConstructor
+public class Analyzer {
 
-        this.target = subAnalyzer.target();
-        this.allowed = subAnalyzer.allowed();
+    private List<Pattern> patterns;
+
+    @Data
+    @AllArgsConstructor
+    public static class Pattern {
+        private boolean required;
+        private TokenType identifier;
+        private List<Pattern> subPatterns;
     }
 
-    @Getter
-    private final Class<? extends Node> target;
+    @Builder
+    public Analyzer(List<Pattern> patterns) {
+        this.patterns = patterns;
+    }
 
-    @Getter
-    private final Class<? extends Node>[] allowed;
+    public static class AnalyzerBuilder {
+        private final List<Pattern> patterns = new ArrayList<>();
 
-    public abstract Node analyze(SyntaxAnalyzer syntaxAnalyzer, TokenStream tokenStream);
+        public AnalyzerBuilder rule(boolean required, TokenType identifier) {
+            patterns.add(new Pattern(required, identifier, null));
+            return this;
+        }
 
-    public Expression analyzeExpression(SyntaxAnalyzer syntaxAnalyzer, TokenStream tokenStream, LinkedList<Analyzer> without) {
-        if (getTarget().isAssignableFrom(Expression.class))
-            return null;
+        public AnalyzerBuilder rule(boolean required, AnalyzerBuilder builder) {
+            patterns.add(new Pattern(required, null, builder.build().getPatterns()));
+            return this;
+        }
 
-        return (Expression) analyze(syntaxAnalyzer, tokenStream);
+        public AnalyzerBuilder ruleListOr(boolean required, AnalyzerBuilder... builders) {
+            List<Pattern> subPatterns = new ArrayList<>();
+            for (AnalyzerBuilder builder : builders) {
+                subPatterns.addAll(builder.build().getPatterns());
+            }
+            patterns.add(new Pattern(required, null, subPatterns));
+            return this;
+        }
+
+        public AnalyzerBuilder ruleList(boolean requiredFirst, AnalyzerBuilder... builders) {
+            List<Pattern> subPatterns = new ArrayList<>();
+            for (AnalyzerBuilder builder : builders) {
+                subPatterns.addAll(builder.build().getPatterns());
+            }
+            patterns.add(new Pattern(requiredFirst, null, subPatterns));
+            return this;
+        }
     }
 }

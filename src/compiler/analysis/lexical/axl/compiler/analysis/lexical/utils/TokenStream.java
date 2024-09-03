@@ -12,15 +12,11 @@ public interface TokenStream {
 
     @NonNull IFile getFile();
 
-    @Nullable Token next();
+    Token next();
 
-    @Nullable Token get();
+    Token get();
 
     boolean hasNext();
-
-    boolean nextTokenTypeIs(TokenType compare);
-
-    boolean nextTokenTypeNot(TokenType compare);
 
     @NonNull Frame createFrame();
 

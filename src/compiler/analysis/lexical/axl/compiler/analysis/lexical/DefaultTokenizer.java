@@ -31,7 +31,7 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
     public @NonNull Token tokenize() {
         createFrame();
         if (end())
-            throw new IllegalStateException();
+            throw new IllegalStateException("Calling a tokenizer on a completed file");
 
         DefaultToken token;
 

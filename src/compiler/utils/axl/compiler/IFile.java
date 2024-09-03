@@ -9,6 +9,5 @@ public interface IFile {
     String getContent();
 
     TokenStream createTokenStream();
-
 }
 

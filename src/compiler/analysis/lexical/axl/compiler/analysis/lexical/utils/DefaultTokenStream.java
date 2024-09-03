@@ -50,24 +50,6 @@ public class DefaultTokenStream implements TokenStream {
         return next();
     }
 
-    public @Nullable TokenType nextTokenType() {
-        Token next = next();
-        if (next == null)
-            return null;
-
-        return next.getType();
-    }
-
-    @Override
-    public boolean nextTokenTypeIs(@NonNull TokenType compare) {
-        return nextTokenType() == compare;
-    }
-
-    @Override
-    public boolean nextTokenTypeNot(@NonNull TokenType compare) {
-        return nextTokenType() != compare;
-    }
-
     @Override
     public @Nullable Token get() {
         if (iterator < tokens.size())
