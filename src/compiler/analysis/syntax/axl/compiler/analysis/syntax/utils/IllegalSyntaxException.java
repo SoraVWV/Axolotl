@@ -1,8 +1,7 @@
 package axl.compiler.analysis.syntax.utils;
 
+import axl.compiler.IFile;
 import axl.compiler.analysis.lexical.Token;
-import axl.compiler.analysis.lexical.Tokenizer;
-import axl.compiler.analysis.lexical.TokenizerFrame;
 import axl.compiler.analysis.lexical.utils.TokenStream;
 import lombok.Getter;
 import lombok.NonNull;
@@ -14,26 +13,31 @@ public class IllegalSyntaxException extends RuntimeException {
 
     public IllegalSyntaxException(String message, TokenStream tokenStream) {
         super(message);
-        this.message = formatErrorMessage(tokenStream, tokenStream.get(), message);
+        this.message = formatErrorMessage(tokenStream.getFile(), tokenStream.get(), message);
     }
 
-    private static String formatErrorMessage(TokenStream tokenizer, Token token, String message) {
-        final String format = """
-                Lexical error in row %d and column %d. %s
+    public IllegalSyntaxException(String message, IFile file, Token token) {
+        super(message);
+        this.message = formatErrorMessage(file, token, message);
+    }
+
+    private final static String format = """
+                Syntax error in row %d and column %d. %s
                 
                 %s ╭╶───╴%s:%d:%d╶───╴
                 %d │ %s
                 %s │ %s╰ %s
                 """;
 
+    private static String formatErrorMessage(IFile file, Token token, String message) {
         int leftWhitespaces = getDigits(token.getLine());
         String whitespaces = " ".repeat(leftWhitespaces);
-        String[] contentLines = tokenizer.getFile().getContent().split("\n", token.getLine() + 1);
+        String[] contentLines = file.getContent().split("\n", token.getLine() + 1);
         String errorLine = contentLines[token.getLine() - 1];
 
         return format.formatted(
                 token.getLine(), token.getColumn(), message,
-                whitespaces, tokenizer.getFile().getFilename(), token.getLine(), token.getColumn(),
+                whitespaces, file.getFilename(), token.getLine(), token.getColumn(),
                 token.getLine(), errorLine,
                 whitespaces, " ".repeat(token.getColumn() - 1), message
         );

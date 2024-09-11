@@ -63,6 +63,8 @@ public enum TokenType {
 
     AT_SYMBOL(TokenGroup.OPERATOR, "@"),
     QUESTION_MARK(TokenGroup.OPERATOR, "?"),
+    IS(TokenGroup.OPERATOR, "is"),
+    AS(TokenGroup.OPERATOR, "as"),
 
     PACKAGE(TokenGroup.KEYWORD, "package"),
     IMPORT(TokenGroup.KEYWORD, "import"),
@@ -91,7 +93,9 @@ public enum TokenType {
     WHILE(TokenGroup.KEYWORD, "while"),
     SWITCH(TokenGroup.KEYWORD, "switch"),
     CASE(TokenGroup.KEYWORD, "case"),
-    IS(TokenGroup.KEYWORD, "is"),
+
+    TRUE(TokenGroup.KEYWORD, "true"),
+    FALSE(TokenGroup.KEYWORD, "false"),
 
     IDENTIFY(TokenGroup.IDENTIFY),
 

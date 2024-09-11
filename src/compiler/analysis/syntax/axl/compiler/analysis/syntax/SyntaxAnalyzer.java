@@ -1,12 +1,10 @@
 package axl.compiler.analysis.syntax;
 
 import axl.compiler.analysis.lexical.utils.TokenStream;
-import axl.compiler.analysis.syntax.ast.File;
-import axl.compiler.analysis.syntax.ast.Node;
 import lombok.NonNull;
 
-public interface SyntaxAnalyzer {
+public interface SyntaxAnalyzer<T> {
 
-    @NonNull File analyze(TokenStream tokenStream);
+    @NonNull T analyze(TokenStream tokenStream);
 
 }

@@ -1,8 +1,11 @@
 package axl.compiler;
 
 import axl.compiler.analysis.lexical.utils.TokenStream;
+import axl.compiler.analysis.syntax.DefaultExpressionAnalyzer;
+import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
 import axl.compiler.analysis.syntax.SyntaxAnalyzer;
-import axl.compiler.analysis.syntax.ast.Node;
+import axl.compiler.analysis.syntax.ast.expression.Expression;
+import lombok.NonNull;
 import lombok.SneakyThrows;
 
 import java.io.File;
@@ -20,21 +23,22 @@ public class Main {
         file = new axl.compiler.File(filename, content);
 
         TokenStream stream = file.createTokenStream();
-
         long point = System.currentTimeMillis();
-        while (stream.hasNext())
-            stream.next();
-        long time = ((int) (System.currentTimeMillis() - point));
+        DefaultExpressionAnalyzer analyzer = new DefaultExpressionAnalyzer();
 
+
+        Expression expression = analyzer.analyze(stream);
+
+        long time = ((int) (System.currentTimeMillis() - point));
+        System.out.println(formatString(expression));
         System.out.println((int) time + " ms");
 
-        parse();
     }
 
     private static void parse() {
         TokenStream stream = file.createTokenStream();
-        SyntaxAnalyzer analyzer = SyntaxAnalyzerAgent.createSyntaxAnalyzer();
-        Node root = analyzer.analyze(stream);
+        SyntaxAnalyzer<axl.compiler.analysis.syntax.ast.File> analyzer = new DefaultSyntaxAnalyzer();
+        axl.compiler.analysis.syntax.ast.@NonNull File root = analyzer.analyze(stream);
         System.out.println(formatString(root));
     }
 

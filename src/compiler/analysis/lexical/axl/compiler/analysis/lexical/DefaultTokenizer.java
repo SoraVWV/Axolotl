@@ -118,6 +118,16 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
     }
 
     private @NonNull DefaultToken readIdentifyOrKeyword() {
+        if (isRepresentation(TokenType.AS.getRepresentation())) {
+            next(TokenType.AS.getRepresentation().length());
+            return new DefaultToken(TokenType.AS);
+        }
+
+        if (isRepresentation(TokenType.IS.getRepresentation())) {
+            next(TokenType.IS.getRepresentation().length());
+            return new DefaultToken(TokenType.IS);
+        }
+
         do {
             next();
         } while (isIdentifierPart(peek()));
@@ -332,7 +342,7 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
 
         for (TokenType type : TokenType.delimitersAndOperators()) {
             String representation = type.getRepresentation();
-            if (!isOperator(representation))
+            if (!isRepresentation(representation))
                 continue;
 
             if (currentLength < representation.length()) {
@@ -360,7 +370,7 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
         return new DefaultToken(current);
     }
 
-    private boolean isOperator(String representation) {
+    private boolean isRepresentation(String representation) {
         for (int i = 0; i < representation.length(); i++)
             if (peek(i) != representation.charAt(i))
                 return false;

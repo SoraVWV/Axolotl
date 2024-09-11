@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="lexical">
-    <CLASSES />
-    <JAVADOC />
-    <SOURCES>
-      <root url="file://$PROJECT_DIR$/src/compiler/analysis/lexical" />
-    </SOURCES>
-  </library>
-</component>
