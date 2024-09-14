@@ -23,15 +23,23 @@ public class Main {
         file = new axl.compiler.File(filename, content);
 
         TokenStream stream = file.createTokenStream();
+        Thread.sleep(5000);
         long point = System.currentTimeMillis();
         DefaultExpressionAnalyzer analyzer = new DefaultExpressionAnalyzer();
 
 
+
+
         Expression expression = analyzer.analyze(stream);
 
+
+
+
+
         long time = ((int) (System.currentTimeMillis() - point));
-        System.out.println(formatString(expression));
+        //System.out.println(formatString(expression));
         System.out.println((int) time + " ms");
+        Thread.sleep(5000);
 
     }
 

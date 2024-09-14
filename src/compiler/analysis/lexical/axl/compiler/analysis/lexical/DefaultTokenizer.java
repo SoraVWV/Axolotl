@@ -336,6 +336,7 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
             throw new IllegalSourceException("Numeric literal cannot have an underscore as it's last character", this, frame);
     }
 
+    // TODO optimization
     private @NonNull DefaultToken readDelimiterOrOperator() {
         int currentLength = 0;
         TokenType current = null;
