@@ -5,13 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="416ea2bd-ae11-4e27-abb4-f92cf8fc7be7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/utils/AnalyzerEntry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/FileState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/Node.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/State.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/DefaultTokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/DefaultTokenizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/DefaultExpressionAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/DefaultExpressionAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/Expression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/DefaultExpressionAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/ExpressionState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/DefaultSyntaxAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/DefaultSyntaxAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/SyntaxAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/SyntaxAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/File.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/File.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/ArrayExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/ArrayExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/BoolExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/BoolExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/CastExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/CastExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/Expression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/FieldAccessExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/FieldAccessExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/IdentifyExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/IdentifyExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/LambdaExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/LambdaExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/LiteralExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/LiteralExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/MethodExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/MethodExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/Pattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/Pattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/ValueDefineExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/ValueDefineExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/VariableDefineExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/VariableDefineExpression.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/compiler/entry/axl/compiler/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/entry/axl/compiler/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/axolotl/axl/example/Main.axl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/axolotl/axl/example/Main.axl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/axl/compiler/analysis/syntax/SyntaxAnalyzerTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,9 +36,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -89,6 +104,7 @@
       <recent name="axl.compiler" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="axl.compiler.analysis.syntax" />
       <recent name="axl.compiler.analysis.syntax.ast.expression" />
     </key>
   </component>
@@ -141,7 +157,9 @@
       <workItem from="1726246745931" duration="4254000" />
       <workItem from="1726299679183" duration="277000" />
       <workItem from="1726300586514" duration="1883000" />
-      <workItem from="1726317535898" duration="645000" />
+      <workItem from="1726317535898" duration="7007000" />
+      <workItem from="1726386725620" duration="8026000" />
+      <workItem from="1726416214899" duration="375000" />
     </task>
     <servers />
   </component>

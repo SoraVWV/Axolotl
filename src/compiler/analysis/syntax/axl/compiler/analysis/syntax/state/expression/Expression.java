@@ -1,12 +1,13 @@
-package axl.compiler.analysis.syntax.ast.expression;
+package axl.compiler.analysis.syntax.state.expression;
 
 import axl.compiler.analysis.lexical.Token;
+import axl.compiler.analysis.syntax.state.Node;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
-public sealed class Expression permits ArrayExpression, BoolExpression, CastExpression, Expression.BinaryExpression, Expression.UnaryExpression, FieldAccessExpression, IdentifyExpression, LambdaExpression, LiteralExpression, MethodExpression, ValueDefineExpression, VariableDefineExpression {
+public sealed class Expression implements Node permits ArrayExpression, BoolExpression, CastExpression, Expression.BinaryExpression, Expression.UnaryExpression, FieldAccessExpression, IdentifyExpression, LambdaExpression, LiteralExpression, MethodExpression, ValueDefineExpression, VariableDefineExpression {
 
     @Getter
     @AllArgsConstructor(access = AccessLevel.PUBLIC)

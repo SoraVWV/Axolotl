@@ -1,41 +1,65 @@
-package axl.compiler.analysis.syntax;
+package axl.compiler.analysis.syntax.state;
 
 import axl.compiler.IFile;
 import axl.compiler.analysis.lexical.Token;
 import axl.compiler.analysis.lexical.TokenGroup;
 import axl.compiler.analysis.lexical.TokenType;
+import axl.compiler.analysis.lexical.utils.Frame;
 import axl.compiler.analysis.lexical.utils.TokenStream;
-import axl.compiler.analysis.syntax.DefaultExpressionAnalyzer.OperatorEntry.OperatorType;
-import axl.compiler.analysis.syntax.ast.expression.*;
+import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
+import axl.compiler.analysis.syntax.state.ExpressionState.OperatorEntry.OperatorType;
+import axl.compiler.analysis.syntax.state.expression.*;
 import axl.compiler.analysis.syntax.utils.AnalyzerEntry;
 import axl.compiler.analysis.syntax.utils.IllegalSyntaxException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.EmptyStackException;
 import java.util.Stack;
+import java.util.function.Consumer;
 
 @Getter
-@NoArgsConstructor
-public class DefaultExpressionAnalyzer {
+public class ExpressionState implements State {
+
+    private final DefaultSyntaxAnalyzer analyzer;
 
     private final Stack<AnalyzerEntry> operatorEntries = new Stack<>();
 
     private final Stack<Expression> expressions = new Stack<>();
 
+    private final Consumer<Expression> result;
+
     @Setter
     private Boolean lastExpression = false;
 
-    public final Expression analyze(TokenStream stream) {
+    private Boolean nextState = false;
+
+    int parents = 0;
+
+    public ExpressionState(DefaultSyntaxAnalyzer analyzer, Consumer<Expression> result) {
+        this.analyzer = analyzer;
+        this.result = result;
+    }
+
+    @Override
+    public void analyze() {
+        final TokenStream stream = analyzer.getStream();
+
         while (stream.hasNext()) {
             if (stream.get().getType().getGroup() == TokenGroup.OPERATOR || stream.get().getType().getGroup() == TokenGroup.DELIMITER) {
+                Frame frame = stream.createFrame();
                 OperatorEntry entry = findOperator(stream.getFile(), stream.next());
 
                 if (entry.getOperator().operator == TokenType.RIGHT_PARENT) {
+                    if (parents == 0) {
+                        stream.restoreFrame(frame);
+                        break;
+                    }
                     entry.accept();
                     continue;
+                } else if (entry.getOperator().operator == TokenType.LEFT_PARENT) {
+                    parents++;
                 }
 
                 reduce(entry.getOperator().getPriority());
@@ -44,18 +68,46 @@ public class DefaultExpressionAnalyzer {
             } else if (findPrimary(stream)) {
                 lastExpression = true;
             } else {
-                throw new RuntimeException();
+                break;
             }
         }
+
+        if (nextState) {
+            nextState = false;
+            return;
+        }
+
         reduce();
         if (expressions.size() != 1) {
             throw new RuntimeException();
         }
 
-        return expressions.pop();
+        analyzer.getStates().pop();
+        result.accept(expressions.pop());
     }
 
     private boolean findPrimary(TokenStream stream) {
+        if (getLastExpression()) {
+            if (stream.hasNext() && stream.get().getType() != TokenType.IDENTIFY)
+                return false;
+
+            Frame frame = stream.createFrame();
+            stream.next();
+
+            if (stream.hasNext() && stream.get().getType() != TokenType.LEFT_PARENT) {
+                stream.restoreFrame(frame);
+                return false;
+            }
+            stream.next();
+            {
+
+                analyzer.getStates().push(new ExpressionState(analyzer, expression -> {
+
+                });
+            } else
+                return false;
+        }
+
         if (stream.get().getType().getGroup() == TokenGroup.LITERAL) {
             expressions.push(new LiteralExpression(stream.next()));
         } else if (stream.get().getType() == TokenType.IDENTIFY) {
@@ -224,6 +276,7 @@ public class DefaultExpressionAnalyzer {
             if(((OperatorEntry) analyzer.getOperatorEntries().pop()).getOperator().operator != TokenType.LEFT_PARENT)
                 throw new RuntimeException();
 
+            analyzer.parents--;
             analyzer.setLastExpression(true);
         }), // TODO output
         EXCEPTION(((analyzer, token, type) -> {
@@ -234,7 +287,7 @@ public class DefaultExpressionAnalyzer {
 
         interface Generator {
 
-            void accept(DefaultExpressionAnalyzer defaultExpressionAnalyzer, Token token, OperatorType type);
+            void accept(ExpressionState expressionState, Token token, OperatorType type);
         }
     }
 
@@ -250,7 +303,7 @@ public class DefaultExpressionAnalyzer {
 
         @Override
         public void accept() {
-            operator.getGenerator().getLambda().accept(DefaultExpressionAnalyzer.this, token, type);
+            operator.getGenerator().getLambda().accept(ExpressionState.this, token, type);
         }
 
         enum OperatorType {

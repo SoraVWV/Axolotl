@@ -5,6 +5,5 @@ import lombok.NonNull;
 
 public interface SyntaxAnalyzer<T> {
 
-    @NonNull T analyze(TokenStream tokenStream);
-
+    @NonNull T analyze();
 }

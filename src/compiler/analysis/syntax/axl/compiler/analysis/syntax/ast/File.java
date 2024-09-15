@@ -2,7 +2,7 @@ package axl.compiler.analysis.syntax.ast;
 
 import axl.compiler.IFile;
 import axl.compiler.analysis.lexical.Token;
-import axl.compiler.analysis.syntax.ast.expression.Expression;
+import axl.compiler.analysis.syntax.state.expression.Expression;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

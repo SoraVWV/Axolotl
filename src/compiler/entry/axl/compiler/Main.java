@@ -1,15 +1,16 @@
 package axl.compiler;
 
 import axl.compiler.analysis.lexical.utils.TokenStream;
-import axl.compiler.analysis.syntax.DefaultExpressionAnalyzer;
+import axl.compiler.analysis.syntax.state.ExpressionState;
 import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
 import axl.compiler.analysis.syntax.SyntaxAnalyzer;
-import axl.compiler.analysis.syntax.ast.expression.Expression;
+import axl.compiler.analysis.syntax.state.expression.Expression;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.function.Consumer;
 
 public class Main {
 
@@ -24,13 +25,16 @@ public class Main {
 
         TokenStream stream = file.createTokenStream();
         Thread.sleep(5000);
+
+        Consumer<Expression> expressionConsumer = expression -> {
+
+        };
         long point = System.currentTimeMillis();
-        DefaultExpressionAnalyzer analyzer = new DefaultExpressionAnalyzer();
+        ExpressionState analyzer = new ExpressionState();
 
 
 
-
-        Expression expression = analyzer.analyze(stream);
+        Expression expression = analyzer.analyze();
 
 
 
@@ -45,8 +49,8 @@ public class Main {
 
     private static void parse() {
         TokenStream stream = file.createTokenStream();
-        SyntaxAnalyzer<axl.compiler.analysis.syntax.ast.File> analyzer = new DefaultSyntaxAnalyzer();
-        axl.compiler.analysis.syntax.ast.@NonNull File root = analyzer.analyze(stream);
+        SyntaxAnalyzer<axl.compiler.analysis.syntax.ast.File> analyzer = new DefaultSyntaxAnalyzer(stream);
+        axl.compiler.analysis.syntax.ast.@NonNull File root = analyzer.analyze();
         System.out.println(formatString(root));
     }
 
