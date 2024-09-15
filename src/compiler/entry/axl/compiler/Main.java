@@ -1,7 +1,6 @@
 package axl.compiler;
 
 import axl.compiler.analysis.lexical.utils.TokenStream;
-import axl.compiler.analysis.syntax.state.ExpressionState;
 import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
 import axl.compiler.analysis.syntax.SyntaxAnalyzer;
 import axl.compiler.analysis.syntax.state.expression.Expression;
@@ -10,7 +9,7 @@ import lombok.SneakyThrows;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.util.function.Consumer;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Main {
 
@@ -24,26 +23,17 @@ public class Main {
         file = new axl.compiler.File(filename, content);
 
         TokenStream stream = file.createTokenStream();
-        Thread.sleep(5000);
 
-        Consumer<Expression> expressionConsumer = expression -> {
-
-        };
         long point = System.currentTimeMillis();
-        ExpressionState analyzer = new ExpressionState();
 
 
-
-        Expression expression = analyzer.analyze();
-
-
-
+        AtomicReference<Expression> e = new AtomicReference<>();
+        new DefaultSyntaxAnalyzer(stream).test(e::set);
 
 
         long time = ((int) (System.currentTimeMillis() - point));
         //System.out.println(formatString(expression));
         System.out.println((int) time + " ms");
-        Thread.sleep(5000);
 
     }
 

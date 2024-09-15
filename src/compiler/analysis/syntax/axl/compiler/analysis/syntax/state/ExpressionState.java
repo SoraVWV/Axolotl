@@ -15,6 +15,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EmptyStackException;
 import java.util.Stack;
 import java.util.function.Consumer;
@@ -46,9 +48,15 @@ public class ExpressionState implements State {
     public void analyze() {
         final TokenStream stream = analyzer.getStream();
 
-        while (stream.hasNext()) {
+        main:
+        while (stream.hasNext())  {
             if (stream.get().getType().getGroup() == TokenGroup.OPERATOR || stream.get().getType().getGroup() == TokenGroup.DELIMITER) {
                 Frame frame = stream.createFrame();
+                switch (stream.get().getType()) {
+                    case COMMA -> { // TODO other delimiters
+                        break main;
+                    }
+                }
                 OperatorEntry entry = findOperator(stream.getFile(), stream.next());
 
                 if (entry.getOperator().operator == TokenType.RIGHT_PARENT) {
@@ -56,6 +64,7 @@ public class ExpressionState implements State {
                         stream.restoreFrame(frame);
                         break;
                     }
+
                     entry.accept();
                     continue;
                 } else if (entry.getOperator().operator == TokenType.LEFT_PARENT) {
@@ -68,6 +77,7 @@ public class ExpressionState implements State {
             } else if (findPrimary(stream)) {
                 lastExpression = true;
             } else {
+                nextState = true;
                 break;
             }
         }
@@ -88,30 +98,26 @@ public class ExpressionState implements State {
 
     private boolean findPrimary(TokenStream stream) {
         if (getLastExpression()) {
-            if (stream.hasNext() && stream.get().getType() != TokenType.IDENTIFY)
-                return false;
-
-            Frame frame = stream.createFrame();
-            stream.next();
-
-            if (stream.hasNext() && stream.get().getType() != TokenType.LEFT_PARENT) {
-                stream.restoreFrame(frame);
-                return false;
-            }
-            stream.next();
-            {
-
-                analyzer.getStates().push(new ExpressionState(analyzer, expression -> {
-
-                });
-            } else
-                return false;
+            return false;
         }
 
         if (stream.get().getType().getGroup() == TokenGroup.LITERAL) {
             expressions.push(new LiteralExpression(stream.next()));
         } else if (stream.get().getType() == TokenType.IDENTIFY) {
-            expressions.push(new IdentifyExpression(stream.next()));
+            Token name = stream.next();
+            Frame frame = stream.createFrame();
+
+            if (!stream.hasNext() || stream.get().getType() != TokenType.LEFT_PARENT) {
+                stream.restoreFrame(frame);
+                expressions.push(new IdentifyExpression(name));
+                return true;
+            }
+
+            stream.next();
+
+            MethodExpression methodExpression = new MethodExpression(name, new ArrayList<>());
+            analyzer.getStates().push(new MethodExpressionState(analyzer, methodExpression, expressions::add));
+            return false;
         } else if (stream.get().getType() == TokenType.VAR) {
             if (!stream.hasNext())
                 throw new RuntimeException();
