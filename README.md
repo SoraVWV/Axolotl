@@ -14,7 +14,7 @@ respecting the provided conventions
 Example:
 
 ````kotlin
-@main(args: List< String >) {
+@main(args: List<String>) {
     raise Message ("Hello, world!")
 }
 
@@ -56,3 +56,11 @@ Answer:
 * It definitely will. Unfortunately, not in the first dev versions, but the implementation of partial or full backward
   compatibility is a mandatory development stage. The first dev version will have the ability to connect .jar files,
   albeit limited
+
+  ### TODO list (dev version)
+
+  - [x] lexical analyzer
+  - [ ] syntax analyzer
+  - [ ] semantic analyzer
+  - [ ] linker
+  - [ ] generator
