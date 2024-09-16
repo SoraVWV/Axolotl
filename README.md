@@ -57,6 +57,7 @@ Answer:
   compatibility is a mandatory development stage. The first dev version will have the ability to connect .jar files,
   albeit limited
 
+---
 ### TODO list (dev version)
 
 - [x] lexical analyzer
