@@ -29,7 +29,7 @@ ref Message {
     var message: String
 
     @public
-    @new(message: String) {
+    @raise(message: String) {
         this.message = message
     }
 }
