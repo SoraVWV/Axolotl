@@ -39,8 +39,20 @@ ref Message {
 ### Frequently asked questions
 
 Question:
-> Is it worth developing large projects on Axolotl when releasing dev versions?
+
+* Is it worth developing large projects on Axolotl when releasing dev versions?
 
 Answer:
-> – Only if you are familiar with the list of approved designs that will be able to support backwards compatibility
 
+* Only if you are familiar with the list of approved designs that will be able to support backwards compatibility
+
+---
+Question:
+
+* Will there be backward compatibility with Java?
+
+Answer:
+
+* It definitely will. Unfortunately, not in the first dev versions, but the implementation of partial or full backward
+  compatibility is a mandatory development stage. The first dev version will have the ability to connect .jar files,
+  albeit limited
