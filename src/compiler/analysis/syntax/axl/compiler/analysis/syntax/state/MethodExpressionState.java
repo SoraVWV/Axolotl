@@ -6,20 +6,19 @@ import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
 import axl.compiler.analysis.syntax.state.expression.Expression;
 import axl.compiler.analysis.syntax.state.expression.MethodExpression;
 
-import java.util.function.Consumer;
-
 public class MethodExpressionState implements State {
 
     private final DefaultSyntaxAnalyzer analyzer;
 
-    private final Consumer<Expression> result;
-
     private final MethodExpression method;
 
-    public MethodExpressionState(DefaultSyntaxAnalyzer analyzer, MethodExpression method, Consumer<Expression> result) {
+    private final int level;
+
+    public MethodExpressionState(DefaultSyntaxAnalyzer analyzer, MethodExpression method) {
         this.analyzer = analyzer;
-        this.result = result;
         this.method = method;
+        analyzer.getExpressions().push(method);
+        this.level = analyzer.getExpressions().size();
     }
 
     @Override
@@ -28,25 +27,28 @@ public class MethodExpressionState implements State {
         if (!stream.hasNext())
             throw new RuntimeException();
 
+        if (analyzer.getExpressions().size() == level + 1) {
+            Expression expression = analyzer.getExpressions().pop();
+            ((MethodExpression) analyzer.getExpressions().peek()).getArguments().add(expression);
+        }
+
         if (stream.get().getType() == TokenType.RIGHT_PARENT) {
             stream.next();
             analyzer.getStates().pop();
-            result.accept(method);
             return;
         }
 
         if (method.getArguments().isEmpty()) {
-            analyzer.getStates().push(new ExpressionState(analyzer, method.getArguments()::add));
+            analyzer.getStates().push(new ExpressionState(analyzer));
             return;
         }
 
         if (stream.get().getType() == TokenType.COMMA) {
             stream.next();
-            analyzer.getStates().push(new ExpressionState(analyzer, method.getArguments()::add));
+            analyzer.getStates().push(new ExpressionState(analyzer));
             return;
         }
 
-        System.out.println(stream.get().getType());
         throw new RuntimeException();
     }
 }

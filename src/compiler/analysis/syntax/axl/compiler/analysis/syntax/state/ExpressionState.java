@@ -16,10 +16,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EmptyStackException;
 import java.util.Stack;
-import java.util.function.Consumer;
 
 @Getter
 public class ExpressionState implements State {
@@ -28,9 +26,7 @@ public class ExpressionState implements State {
 
     private final Stack<AnalyzerEntry> operatorEntries = new Stack<>();
 
-    private final Stack<Expression> expressions = new Stack<>();
-
-    private final Consumer<Expression> result;
+    private final int level;
 
     @Setter
     private Boolean lastExpression = false;
@@ -39,9 +35,9 @@ public class ExpressionState implements State {
 
     int parents = 0;
 
-    public ExpressionState(DefaultSyntaxAnalyzer analyzer, Consumer<Expression> result) {
+    public ExpressionState(DefaultSyntaxAnalyzer analyzer) {
         this.analyzer = analyzer;
-        this.result = result;
+        this.level = analyzer.getExpressions().size();
     }
 
     @Override
@@ -88,12 +84,10 @@ public class ExpressionState implements State {
         }
 
         reduce();
-        if (expressions.size() != 1) {
+        if (analyzer.getExpressions().size() - level != 1)
             throw new RuntimeException();
-        }
 
         analyzer.getStates().pop();
-        result.accept(expressions.pop());
     }
 
     private boolean findPrimary(TokenStream stream) {
@@ -102,21 +96,21 @@ public class ExpressionState implements State {
         }
 
         if (stream.get().getType().getGroup() == TokenGroup.LITERAL) {
-            expressions.push(new LiteralExpression(stream.next()));
+            analyzer.getExpressions().push(new LiteralExpression(stream.next()));
         } else if (stream.get().getType() == TokenType.IDENTIFY) {
             Token name = stream.next();
             Frame frame = stream.createFrame();
 
             if (!stream.hasNext() || stream.get().getType() != TokenType.LEFT_PARENT) {
                 stream.restoreFrame(frame);
-                expressions.push(new IdentifyExpression(name));
+                analyzer.getExpressions().push(new IdentifyExpression(name));
                 return true;
             }
 
             stream.next();
 
-            MethodExpression methodExpression = new MethodExpression(name, new ArrayList<>());
-            analyzer.getStates().push(new MethodExpressionState(analyzer, methodExpression, expressions::add));
+            MethodExpression methodExpression = new MethodExpression(name, new ArrayList<>(0));
+            analyzer.getStates().push(new MethodExpressionState(analyzer, methodExpression));
             return false;
         } else if (stream.get().getType() == TokenType.VAR) {
             if (!stream.hasNext())
@@ -130,7 +124,7 @@ public class ExpressionState implements State {
             if (token.getType() != TokenType.IDENTIFY)
                 throw new RuntimeException();
 
-            expressions.push(new VariableDefineExpression(null, token));
+            analyzer.getExpressions().push(new VariableDefineExpression(null, token));
         } else if (stream.get().getType() == TokenType.VAL) {
             if (!stream.hasNext())
                 throw new RuntimeException();
@@ -143,7 +137,7 @@ public class ExpressionState implements State {
             if (token.getType() != TokenType.IDENTIFY)
                 throw new RuntimeException();
 
-            expressions.push(new ValueDefineExpression(null, token));
+            analyzer.getExpressions().push(new ValueDefineExpression(null, token));
         } else {
             return false;
         }
@@ -241,9 +235,9 @@ public class ExpressionState implements State {
         BINARY((analyzer, token, type) -> {
             analyzer.getOperatorEntries().pop();
             try {
-                Expression right = analyzer.getExpressions().pop();
-                Expression left = analyzer.getExpressions().pop();
-                analyzer.getExpressions().push(new Expression.BinaryExpression(left, right, token));
+                Expression right = analyzer.getAnalyzer().getExpressions().pop();
+                Expression left = analyzer.getAnalyzer().getExpressions().pop();
+                analyzer.getAnalyzer().getExpressions().push(new Expression.BinaryExpression(left, right, token));
                 analyzer.setLastExpression(true);
             } catch (EmptyStackException e) {
                 throw new IllegalStateException("Invalid expression: insufficient operands for binary operator " + type, e);
@@ -252,11 +246,11 @@ public class ExpressionState implements State {
         UNARY((analyzer, token, type) -> {
             analyzer.getOperatorEntries().pop();
             try {
-                Expression value = analyzer.getExpressions().pop();
+                Expression value = analyzer.getAnalyzer().getExpressions().pop();
                 if (type == OperatorType.POSTFIX)
-                    analyzer.getExpressions().push(new Expression.UnaryExpression.PostfixExpression(value, token));
+                    analyzer.getAnalyzer().getExpressions().push(new Expression.UnaryExpression.PostfixExpression(value, token));
                 else
-                    analyzer.getExpressions().push(new Expression.UnaryExpression.PrefixExpression(value, token));
+                    analyzer.getAnalyzer().getExpressions().push(new Expression.UnaryExpression.PrefixExpression(value, token));
                 analyzer.setLastExpression(true);
             } catch (EmptyStackException e) {
                 throw new IllegalStateException("Invalid expression: insufficient operands for postfix unary operator " + type, e);
@@ -265,8 +259,8 @@ public class ExpressionState implements State {
         PREFIX((analyzer, token, type) -> {
             analyzer.getOperatorEntries().pop();
             try {
-                Expression value = analyzer.getExpressions().pop();
-                analyzer.getExpressions().push(new Expression.UnaryExpression.PrefixExpression(value, token));
+                Expression value = analyzer.getAnalyzer().getExpressions().pop();
+                analyzer.getAnalyzer().getExpressions().push(new Expression.UnaryExpression.PrefixExpression(value, token));
                 analyzer.setLastExpression(true);
             } catch (EmptyStackException e) {
                 throw new IllegalStateException("Invalid expression: insufficient operands for prefix unary operator " + type, e);

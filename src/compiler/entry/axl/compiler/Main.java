@@ -9,7 +9,6 @@ import lombok.SneakyThrows;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class Main {
 
@@ -23,17 +22,14 @@ public class Main {
         file = new axl.compiler.File(filename, content);
 
         TokenStream stream = file.createTokenStream();
-
+        Thread.sleep(5000);
         long point = System.currentTimeMillis();
 
-
-        AtomicReference<Expression> e = new AtomicReference<>();
-        new DefaultSyntaxAnalyzer(stream).test(e::set);
-
+        Expression e = new DefaultSyntaxAnalyzer(stream).test();
 
         long time = ((int) (System.currentTimeMillis() - point));
         //System.out.println(formatString(expression));
-        System.out.println((int) time + " ms");
+        System.out.println((int) time + " ms");        Thread.sleep(5000);
 
     }
 
@@ -49,7 +45,8 @@ public class Main {
             return "null";
 
         String input = obj.toString();
-        input = input.replace(" ", "");
+        input = input.replace(" ",
+        "");
         StringBuilder formatted = new StringBuilder();
         int indentLevel = 0;
 

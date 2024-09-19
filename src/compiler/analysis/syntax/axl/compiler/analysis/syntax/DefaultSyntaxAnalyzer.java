@@ -11,14 +11,16 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import java.util.Arrays;
 import java.util.Stack;
-import java.util.function.Consumer;
 
 @Getter
 @Setter
 public class DefaultSyntaxAnalyzer implements SyntaxAnalyzer<File> {
 
     private final Stack<State> states = new Stack<>();
+
+    private final Stack<Expression> expressions = new Stack<>();
 
     private final TokenStream stream;
 
@@ -40,9 +42,8 @@ public class DefaultSyntaxAnalyzer implements SyntaxAnalyzer<File> {
         return fileState.build();
     }
 
-    public void test(Consumer<Expression> s) {
-        ExpressionState fileState = new ExpressionState(this, expression ->System.out.println(Main.formatString(expression)));
-        //ExpressionState fileState = new ExpressionState(this, s);
+    public Expression test() {
+        ExpressionState fileState = new ExpressionState(this);
         states.push(fileState);
 
         while(!states.isEmpty()) {
@@ -51,6 +52,9 @@ public class DefaultSyntaxAnalyzer implements SyntaxAnalyzer<File> {
 
         if (stream.hasNext())
             throw new RuntimeException();
+
+        return expressions.pop();
+        //System.out.println(Main.formatString(expressions.pop()));
     }
 }
 
