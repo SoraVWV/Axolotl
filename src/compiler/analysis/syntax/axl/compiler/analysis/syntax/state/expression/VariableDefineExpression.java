@@ -15,12 +15,12 @@ public final class VariableDefineExpression extends Expression {
     private final Type type;
 
     @NotNull
-        private final Token name;
+    private final Token name;
 
-        @Override
-        public String toString() {
-            return "VariableDefineExpression {" +
-                    "name=" + name.getType() +
-                    '}';
-        }
+    @Override
+    public String toString() {
+        return "VariableDefineExpression {" +
+                "name=" + name.getType() +
+                '}';
+    }
 }

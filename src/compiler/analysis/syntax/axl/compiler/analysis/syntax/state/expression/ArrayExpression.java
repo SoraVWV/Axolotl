@@ -13,4 +13,12 @@ public final class ArrayExpression extends Expression {
 
     @NotNull
     private final Expression index;
+
+    @Override
+    public String toString() {
+        return "ArrayExpression {" +
+                "root=" + root +
+                ",index=" + index +
+                '}';
+    }
 }

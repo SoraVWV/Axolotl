@@ -20,7 +20,12 @@ public interface TokenStream {
 
     void restoreFrame(@NonNull Frame frame);
 
+    int peekLine(@NonNull Frame frame);
+
+    int peekLastLine(@NonNull Frame frame);
+
     @NonNull TokenStream createSubStream(Frame start, Frame end);
 
     @NonNull List<Token> copy();
+
 }

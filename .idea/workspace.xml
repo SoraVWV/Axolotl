@@ -4,13 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="416ea2bd-ae11-4e27-abb4-f92cf8fc7be7" name="Changes" comment="">
+    <list default="true" id="ee1cdc1a-7e10-4f2f-a713-1e6c2a15d5c8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/declaration/DeclarationState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/declaration/DeclarationType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/DefaultTokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/DefaultTokenizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/utils/DefaultTokenStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/utils/DefaultTokenStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/utils/TokenStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/utils/TokenStream.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/DefaultSyntaxAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/DefaultSyntaxAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/ExpressionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/ExpressionState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/MethodExpressionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/MethodExpressionState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/Pattern.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/ExpressionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/ExpressionState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/FileState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/declaration/FileState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/MethodExpressionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/MethodExpressionState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/ArrayExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/ArrayExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/BoolExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/CastExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/Expression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/FieldAccessExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/LambdaExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/VariableDefineExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/VariableDefineExpression.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/compiler/entry/axl/compiler/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/entry/axl/compiler/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/utils/axl/compiler/ICompiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/utils/axl/compiler/ICompiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/utils/axl/compiler/IFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/utils/axl/compiler/IFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/utils/axl/compiler/IRef.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/utils/axl/compiler/IRef.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/axolotl/axl/example/Main.axl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/axolotl/axl/example/Main.axl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +39,6 @@
       <list>
         <option value="Enum" />
         <option value="Interface" />
-        <option value="Class" />
       </list>
     </option>
   </component>
@@ -46,60 +61,44 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 1
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
 }</component>
-  <component name="ProjectId" id="2l9UvQ8yHfoqC345jUpmnrhj7d1" />
+  <component name="ProjectId" id="2mnZFvtig1mkGCWSD6lpbmeLWOj" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
     <option name="showScratchesAndConsoles" value="false" />
     <option name="sortByType" value="true" />
     <option name="sortKey" value="BY_TYPE" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Application.Main.axl.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/sora/Рабочий стол/backup/Documents/GitHub/Extremum-Backend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Test.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/sora/Документы/GitHub/Axolotl",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/analysis/syntax/axl/compiler/analysis" />
-      <recent name="$PROJECT_DIR$/src/main/analisys/lexical/axl/compiler/analisys" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/test" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="axl.compiler" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="axl.compiler.analysis.syntax" />
-      <recent name="axl.compiler.analysis.syntax.ast.expression" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Main.axl" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="21" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <configuration name="Test" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="axl.compiler.Main" />
       <module name="Axolotl" />
-      <option name="PROGRAM_PARAMETERS" value="$PROJECT_DIR$/src/test/axolotl/axl/example/Main.axl" />
+      <option name="PROGRAM_PARAMETERS" value="&quot;$PROJECT_DIR$/src/test/axolotl/axl/example/Main.axl&quot;" />
       <extension name="net.ashald.envfile">
         <option name="IS_ENABLED" value="false" />
         <option name="IS_SUBST" value="false" />
@@ -115,69 +114,20 @@
       </method>
     </configuration>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="416ea2bd-ae11-4e27-abb4-f92cf8fc7be7" name="Changes" comment="" />
-      <created>1724592015503</created>
+      <changelist id="ee1cdc1a-7e10-4f2f-a713-1e6c2a15d5c8" name="Changes" comment="" />
+      <created>1727714201185</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1724592015503</updated>
-      <workItem from="1725810971162" duration="6928000" />
-      <workItem from="1725819112115" duration="7637000" />
-      <workItem from="1725827177905" duration="7098000" />
-      <workItem from="1725898429376" duration="6328000" />
-      <workItem from="1725963013209" duration="4354000" />
-      <workItem from="1726035555432" duration="10010000" />
-      <workItem from="1726067708627" duration="4663000" />
-      <workItem from="1726081727582" duration="13232000" />
-      <workItem from="1726246745931" duration="4254000" />
-      <workItem from="1726299679183" duration="277000" />
-      <workItem from="1726300586514" duration="1883000" />
-      <workItem from="1726317535898" duration="7007000" />
-      <workItem from="1726386725620" duration="8026000" />
-      <workItem from="1726416214899" duration="375000" />
-      <workItem from="1726417565855" duration="6101000" />
-      <workItem from="1726501705601" duration="3076000" />
-      <workItem from="1726506850132" duration="760000" />
-      <workItem from="1726742875862" duration="604000" />
-      <workItem from="1726750906006" duration="644000" />
-      <workItem from="1726765143660" duration="597000" />
+      <updated>1727714201185</updated>
+      <workItem from="1727714202312" duration="1206000" />
+      <workItem from="1727715466345" duration="5676000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="." />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
   </component>
 </project>

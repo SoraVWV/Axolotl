@@ -9,6 +9,7 @@ import lombok.SneakyThrows;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Main {
 
@@ -22,22 +23,14 @@ public class Main {
         file = new axl.compiler.File(filename, content);
 
         TokenStream stream = file.createTokenStream();
-        Thread.sleep(5000);
+
         long point = System.currentTimeMillis();
 
-        Expression e = new DefaultSyntaxAnalyzer(stream).test();
 
+        AtomicReference<Expression> e = new AtomicReference<>();
+        new DefaultSyntaxAnalyzer(stream).test(e::set);
         long time = ((int) (System.currentTimeMillis() - point));
-        //System.out.println(formatString(expression));
-        System.out.println((int) time + " ms");        Thread.sleep(5000);
-
-    }
-
-    private static void parse() {
-        TokenStream stream = file.createTokenStream();
-        SyntaxAnalyzer<axl.compiler.analysis.syntax.ast.File> analyzer = new DefaultSyntaxAnalyzer(stream);
-        axl.compiler.analysis.syntax.ast.@NonNull File root = analyzer.analyze();
-        System.out.println(formatString(root));
+        System.out.println((int) time + " ms");
     }
 
     public static String formatString(Object obj) {
@@ -45,8 +38,7 @@ public class Main {
             return "null";
 
         String input = obj.toString();
-        input = input.replace(" ",
-        "");
+        input = input.replace(" ", "");
         StringBuilder formatted = new StringBuilder();
         int indentLevel = 0;
 

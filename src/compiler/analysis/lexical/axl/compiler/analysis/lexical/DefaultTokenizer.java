@@ -270,6 +270,18 @@ public class DefaultTokenizer implements Tokenizer, TokenizerUtils {
             return new DefaultToken(TokenType.DEC_LONG_NUMBER);
         }
 
+        if (peek() == 'F' || peek() == 'f') {
+            next();
+
+            return new DefaultToken(TokenType.FLOAT_NUMBER);
+        }
+
+        if (peek() == 'D' || peek() == 'd') {
+            next();
+
+            return new DefaultToken(TokenType.DOUBLE_NUMBER);
+        }
+
         return new DefaultToken(TokenType.DEC_NUMBER);
     }
 

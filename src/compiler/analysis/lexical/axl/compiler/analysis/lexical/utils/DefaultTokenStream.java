@@ -79,6 +79,19 @@ public class DefaultTokenStream implements TokenStream {
     }
 
     @Override
+    public int peekLine(@NonNull Frame frame) {
+        return tokens.get(frame.getTokenId()).getLine();
+    }
+
+    @Override
+    public int peekLastLine(@NonNull Frame frame) {
+        if (frame.getTokenId() - 1 < 0)
+            return 0;
+
+        return tokens.get(frame.getTokenId() - 1).getLine();
+    }
+
+    @Override
     public @NonNull TokenStream createSubStream(@NonNull Frame start, @NonNull Frame end) {
         List<Token> tokens = this.tokens.subList(
                 start.getTokenId(),

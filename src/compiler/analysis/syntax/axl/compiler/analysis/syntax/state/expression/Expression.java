@@ -7,8 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
-public sealed class Expression implements Node permits ArrayExpression, BoolExpression, CastExpression, Expression.BinaryExpression, Expression.UnaryExpression, FieldAccessExpression, IdentifyExpression, LambdaExpression, LiteralExpression, MethodExpression, ValueDefineExpression, VariableDefineExpression {
+public sealed class Expression implements Node permits ArrayExpression, Expression.BinaryExpression, Expression.UnaryExpression, IdentifyExpression, LiteralExpression, MethodExpression, ValueDefineExpression, VariableDefineExpression {
 
+    public int getLine() {
+        throw new IllegalStateException();
+    }
     @Getter
     @AllArgsConstructor(access = AccessLevel.PUBLIC)
     public static final class BinaryExpression extends Expression {
@@ -80,5 +83,4 @@ public sealed class Expression implements Node permits ArrayExpression, BoolExpr
                     '}';
         }
     }
-
 }

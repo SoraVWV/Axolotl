@@ -1,6 +1,7 @@
-package axl.compiler.analysis.syntax.state;
+package axl.compiler.analysis.syntax.state.declaration;
 
 import axl.compiler.analysis.syntax.ast.File;
+import axl.compiler.analysis.syntax.state.State;
 
 public class FileState implements State {
 
