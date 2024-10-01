@@ -6,6 +6,7 @@ import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
 import axl.compiler.analysis.syntax.state.State;
 import axl.compiler.analysis.syntax.state.expression.Expression;
 import axl.compiler.analysis.syntax.state.expression.MethodExpression;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
@@ -13,11 +14,12 @@ public class MethodExpressionState implements State {
 
     private final DefaultSyntaxAnalyzer analyzer;
 
+    @Nullable
     private final Consumer<Expression> result;
 
     private final MethodExpression method;
 
-    public MethodExpressionState(DefaultSyntaxAnalyzer analyzer, MethodExpression method, Consumer<Expression> result) {
+    public MethodExpressionState(DefaultSyntaxAnalyzer analyzer, MethodExpression method, @Nullable Consumer<Expression> result) {
         this.analyzer = analyzer;
         this.result = result;
         this.method = method;
@@ -32,7 +34,9 @@ public class MethodExpressionState implements State {
         if (stream.get().getType() == TokenType.RIGHT_PARENT) {
             stream.next();
             analyzer.getStates().pop();
-            result.accept(method);
+            if (result != null)
+                result.accept(method);
+
             return;
         }
 

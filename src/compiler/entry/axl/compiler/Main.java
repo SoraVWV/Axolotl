@@ -2,9 +2,7 @@ package axl.compiler;
 
 import axl.compiler.analysis.lexical.utils.TokenStream;
 import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
-import axl.compiler.analysis.syntax.SyntaxAnalyzer;
 import axl.compiler.analysis.syntax.state.expression.Expression;
-import lombok.NonNull;
 import lombok.SneakyThrows;
 
 import java.io.File;
@@ -23,14 +21,7 @@ public class Main {
         file = new axl.compiler.File(filename, content);
 
         TokenStream stream = file.createTokenStream();
-
-        long point = System.currentTimeMillis();
-
-
-        AtomicReference<Expression> e = new AtomicReference<>();
-        new DefaultSyntaxAnalyzer(stream).test(e::set);
-        long time = ((int) (System.currentTimeMillis() - point));
-        System.out.println((int) time + " ms");
+        new DefaultSyntaxAnalyzer(stream).test();
     }
 
     public static String formatString(Object obj) {
