@@ -1,4 +1,4 @@
-package axl.compiler.analysis.syntax.state;
+package axl.compiler.analysis.syntax.base;
 
 public interface State {
 

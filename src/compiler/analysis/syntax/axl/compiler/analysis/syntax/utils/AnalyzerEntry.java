@@ -1,6 +1,6 @@
 package axl.compiler.analysis.syntax.utils;
 
-import axl.compiler.analysis.syntax.state.State;
+import axl.compiler.analysis.syntax.base.State;
 
 public interface AnalyzerEntry {
 

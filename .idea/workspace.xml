@@ -5,15 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee1cdc1a-7e10-4f2f-a713-1e6c2a15d5c8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/Operator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/OperatorEntry.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/OperatorGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/StateController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/utils/StateUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/DefaultToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/DefaultToken.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/TokenType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/utils/DefaultTokenStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/utils/DefaultTokenStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/utils/TokenStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/utils/TokenStream.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/DefaultSyntaxAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/DefaultSyntaxAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/ExpressionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/ExpressionState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/MethodExpressionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/MethodExpressionState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/SyntaxAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/SyntaxAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/File.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/File.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/Type.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/State.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/declaration/DeclarationState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/declaration/DeclarationState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/declaration/DeclarationType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/declaration/DeclarationType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/declaration/FileState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/declaration/FileState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/ArrayExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/ArrayExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/Expression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/IdentifyExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/IdentifyExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/LiteralExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/LiteralExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/MethodExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/MethodExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/ValueDefineExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/ValueDefineExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/VariableDefineExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/VariableDefineExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/ExpressionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/state/ExpressionState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/MethodExpressionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/state/MethodExpressionState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/Operator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/state/Operator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/OperatorEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/state/OperatorEntry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/state/expression/state/OperatorGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/state/OperatorGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/utils/AnalyzerEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/utils/AnalyzerEntry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/utils/IllegalSyntaxException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/utils/IllegalSyntaxException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/compiler/entry/axl/compiler/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/entry/axl/compiler/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/axolotl/axl/example/Main.axl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/axolotl/axl/example/Main.axl" afterDir="false" />
     </list>
@@ -27,6 +48,7 @@
       <list>
         <option value="Enum" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -115,7 +137,8 @@
       <workItem from="1727715466345" duration="5676000" />
       <workItem from="1727789837837" duration="7000" />
       <workItem from="1727791581978" duration="25000" />
-      <workItem from="1727803668044" duration="3980000" />
+      <workItem from="1727803668044" duration="13807000" />
+      <workItem from="1727890147329" duration="13305000" />
     </task>
     <servers />
   </component>

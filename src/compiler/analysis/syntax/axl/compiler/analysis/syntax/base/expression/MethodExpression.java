@@ -1,4 +1,4 @@
-package axl.compiler.analysis.syntax.state.expression;
+package axl.compiler.analysis.syntax.base.expression;
 
 import axl.compiler.analysis.lexical.Token;
 import lombok.AllArgsConstructor;

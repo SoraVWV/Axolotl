@@ -74,6 +74,8 @@ public enum TokenType {
     REF(TokenGroup.KEYWORD, "ref"),
     EXTENDS(TokenGroup.KEYWORD, "extends"),
     IMPLEMENTS(TokenGroup.KEYWORD, "implements"),
+    EVENT(TokenGroup.KEYWORD, "event"),
+    EMIT(TokenGroup.KEYWORD, "emit"),
 
     FN(TokenGroup.KEYWORD, "fn"),
     RETURN(TokenGroup.KEYWORD, "return"),
@@ -81,8 +83,6 @@ public enum TokenType {
     VAL(TokenGroup.KEYWORD, "val"),
     VAR(TokenGroup.KEYWORD, "var"),
     NEW(TokenGroup.KEYWORD, "new"),
-    FREE(TokenGroup.KEYWORD, "free"),
-    RAISE(TokenGroup.KEYWORD, "raise"),
     THROW(TokenGroup.KEYWORD, "throw"),
     TRY(TokenGroup.KEYWORD, "try"),
     CATCH(TokenGroup.KEYWORD, "catch"),

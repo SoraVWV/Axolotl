@@ -1,9 +1,10 @@
-package axl.compiler.analysis.syntax.state.expression;
+package axl.compiler.analysis.syntax.base.expression;
 
 import axl.compiler.analysis.lexical.Token;
 import axl.compiler.analysis.syntax.ast.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,8 +12,9 @@ import org.jetbrains.annotations.Nullable;
 @AllArgsConstructor
 public final class VariableDefineExpression extends Expression {
 
+    @Setter
     @Nullable
-    private final Type type;
+    private Type type;
 
     @NotNull
     private final Token name;

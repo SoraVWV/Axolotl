@@ -105,6 +105,12 @@ public class DefaultTokenStream implements TokenStream {
         return new ArrayList<>(this.tokens);
     }
 
+    @Override
+    public void decrement() {
+        if (iterator > 0)
+            iterator--;
+    }
+
     public void tokenize() {
         this.tokens.add(tokenizer.tokenize());
         processed = tokenizer.isProcessed();

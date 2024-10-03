@@ -13,6 +13,8 @@ public class IllegalSyntaxException extends RuntimeException {
 
     public IllegalSyntaxException(String message, TokenStream tokenStream) {
         super(message);
+        if (!tokenStream.hasNext())
+            tokenStream.decrement();
         this.message = formatErrorMessage(tokenStream.getFile(), tokenStream.get(), message);
     }
 

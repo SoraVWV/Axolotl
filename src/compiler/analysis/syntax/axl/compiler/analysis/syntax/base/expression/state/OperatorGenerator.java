@@ -1,10 +1,10 @@
-package axl.compiler.analysis.syntax.state.expression.state;
+package axl.compiler.analysis.syntax.base.expression.state;
 
 import axl.compiler.analysis.lexical.Token;
 import axl.compiler.analysis.lexical.TokenType;
-import axl.compiler.analysis.syntax.state.State;
-import axl.compiler.analysis.syntax.state.expression.ArrayExpression;
-import axl.compiler.analysis.syntax.state.expression.Expression;
+import axl.compiler.analysis.syntax.base.State;
+import axl.compiler.analysis.syntax.base.expression.ArrayExpression;
+import axl.compiler.analysis.syntax.base.expression.Expression;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -51,13 +51,13 @@ enum OperatorGenerator {
         while (analyzer.sizeContext() != 0 && analyzer.peekContext().getOperator().getOperator() != TokenType.LEFT_PARENT)
             analyzer.peekContext().accept(analyzer);
 
-        if (analyzer.sizeContext() != 0)
+        if (analyzer.sizeContext() == 0)
             throw new EmptyStackException();
 
         if (analyzer.popContext().getOperator().getOperator() != TokenType.LEFT_PARENT)
             throw new RuntimeException();
 
-        if (analyzer.sizeExpressions() < 2)
+        if (analyzer.sizeExpressions() < 1)
             throw new RuntimeException();
 
         analyzer.parents--;

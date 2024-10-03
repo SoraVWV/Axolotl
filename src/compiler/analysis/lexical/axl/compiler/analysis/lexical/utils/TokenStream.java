@@ -28,4 +28,10 @@ public interface TokenStream {
 
     @NonNull List<Token> copy();
 
+    void decrement();
+
+    default TokenStream back() {
+        decrement();
+        return this;
+    }
 }

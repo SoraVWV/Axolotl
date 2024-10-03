@@ -3,22 +3,23 @@ package axl.compiler.analysis.syntax.ast;
 import axl.compiler.analysis.lexical.Token;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
-public final class Type {
+public class Type {
 
-    @Nullable
-    private final Type superType;
+    private final List<Token> type;
 
-    @NotNull
-    private final List<Type> genericTypes = new ArrayList<>();
+    @Override
+    public String toString() {
+        return "Type {" +
+                "location=" + type.stream().map(Token::toString).collect(Collectors.joining(".")) +
+                "}";
+    }
 
-    @NotNull
-    private final Token name;
+    // TODO
+    // private final List<Type> generics;
 }

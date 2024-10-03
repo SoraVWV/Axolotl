@@ -2,12 +2,10 @@ package axl.compiler;
 
 import axl.compiler.analysis.lexical.utils.TokenStream;
 import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
-import axl.compiler.analysis.syntax.state.expression.Expression;
 import lombok.SneakyThrows;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class Main {
 
@@ -21,7 +19,7 @@ public class Main {
         file = new axl.compiler.File(filename, content);
 
         TokenStream stream = file.createTokenStream();
-        new DefaultSyntaxAnalyzer(stream).test();
+        System.out.println(formatString(new DefaultSyntaxAnalyzer(stream).analyze()));
     }
 
     public static String formatString(Object obj) {

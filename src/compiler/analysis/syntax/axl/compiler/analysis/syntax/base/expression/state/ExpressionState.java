@@ -1,4 +1,4 @@
-package axl.compiler.analysis.syntax.state.expression.state;
+package axl.compiler.analysis.syntax.base.expression.state;
 
 import axl.compiler.IFile;
 import axl.compiler.analysis.lexical.Token;
@@ -7,16 +7,16 @@ import axl.compiler.analysis.lexical.TokenType;
 import axl.compiler.analysis.lexical.utils.Frame;
 import axl.compiler.analysis.lexical.utils.TokenStream;
 import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
-import axl.compiler.analysis.syntax.state.Node;
-import axl.compiler.analysis.syntax.state.State;
-import axl.compiler.analysis.syntax.state.expression.*;
+import axl.compiler.analysis.syntax.base.Node;
+import axl.compiler.analysis.syntax.base.State;
+import axl.compiler.analysis.syntax.base.StateController;
+import axl.compiler.analysis.syntax.base.expression.*;
 import axl.compiler.analysis.syntax.utils.IllegalSyntaxException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.function.Consumer;
 
 @Getter
@@ -32,6 +32,10 @@ public class ExpressionState implements State {
 
     private Boolean nextState = false;
 
+    private final Frame start;
+
+    private Frame last;
+
     private final int levelNodes;
 
     private final int levelContext;
@@ -44,6 +48,7 @@ public class ExpressionState implements State {
         this.analyzer = analyzer;
         this.levelNodes = analyzer.getNodes().size();
         this.levelContext = analyzer.getContext().size();
+        this.start = analyzer.getStream().createFrame();
         this.result = result;
     }
 
@@ -55,7 +60,7 @@ public class ExpressionState implements State {
         main:
         while (stream.hasNext())  {
             if (stream.get().getType().getGroup() == TokenGroup.OPERATOR || stream.get().getType().getGroup() == TokenGroup.DELIMITER) {
-                Frame frame = stream.createFrame();
+                last = stream.createFrame();
                 switch (stream.get().getType()) {
                     case SEMI:
                         stream.next();
@@ -66,7 +71,7 @@ public class ExpressionState implements State {
 
                 if (entry.getOperator().getOperator() == TokenType.RIGHT_PARENT) {
                     if (parents == 0) {
-                        stream.restoreFrame(frame);
+                        stream.restoreFrame(last);
                         break;
                     }
 
@@ -76,15 +81,18 @@ public class ExpressionState implements State {
                     parents++;
                 } else if (entry.getOperator().getOperator() == TokenType.RIGHT_SQUARE) {
                     if (square == 0) {
-                        stream.restoreFrame(frame);
+                        stream.restoreFrame(last);
                         break;
                     }
 
                     entry.accept(this);
                     continue;
                 } else if (entry.getOperator().getOperator() == TokenType.LEFT_SQUARE) {
-                    if (!lastExpression)
-                        throw new RuntimeException(); // TODO output
+                    if (!lastExpression) {
+                        // TODO можно реализовать запись массива, например `[1, 3, 2]`
+                        stream.restoreFrame(last);
+                        throw new IllegalSyntaxException("Writing arrays like `[x, y, z,..]` is not allowed in this version", stream);
+                    }
 
                     square++;
                 }
@@ -92,10 +100,10 @@ public class ExpressionState implements State {
                 reduce(entry.getOperator().getPriority());
                 lastExpression = false;
                 if (entry.getType() == OperatorEntry.OperatorType.POSTFIX) {
-                    if (stream.peekLastLine(frame) == entry.getToken().getLine()) {
+                    if (stream.peekLastLine(last) == entry.getToken().getLine()) {
                         lastExpression = true;
                     } else {
-                        stream.restoreFrame(frame);
+                        stream.restoreFrame(last);
                         break;
                     }
                 }
@@ -116,8 +124,14 @@ public class ExpressionState implements State {
         }
 
         reduce();
+        if (sizeExpressions() == 0) {
+            stream.restoreFrame(start);
+            throw new IllegalSyntaxException("Expression not found", stream);
+        }
+
         if (sizeExpressions() != 1) {
-            throw new RuntimeException();
+            stream.restoreFrame(start);
+            throw new IllegalSyntaxException("Invalid expression", stream);
         }
 
         analyzer.getStates().pop();
@@ -125,12 +139,13 @@ public class ExpressionState implements State {
             result.accept(popExpression());
     }
 
+    @SuppressWarnings("DuplicatedCode")
     private boolean findPrimary(TokenStream stream) {
         if (getLastExpression()) {
             if (parents == 0 && square == 0)
                 return false;
 
-            throw new RuntimeException(); // TODO output
+            throw new IllegalSyntaxException("Incorrect arrangement of expressions. Check the positions of the delimiters", stream);
         }
 
         if (stream.get().getType().getGroup() == TokenGroup.LITERAL) {
@@ -145,40 +160,18 @@ public class ExpressionState implements State {
                 return true;
             }
 
-            stream.next();
-
-            MethodExpression methodExpression = new MethodExpression(name, new ArrayList<>());
-            analyzer.getStates().push(new MethodExpressionState(analyzer, methodExpression, (expression) -> {
-                pushExpression(expression);
-                lastExpression = true;
-            }));
+            stream.decrement();
+            StateController.method(analyzer, methodExpression -> {
+                pushExpression(methodExpression);
+                setLastExpression(true);
+            });
             return false;
         } else if (stream.get().getType() == TokenType.VAR) {
-            if (!stream.hasNext())
-                throw new RuntimeException();
-
-            stream.next();
-            if (!stream.hasNext())
-                throw new RuntimeException();
-
-            Token token = stream.next();
-            if (token.getType() != TokenType.IDENTIFY)
-                throw new RuntimeException();
-
-            pushExpression(new VariableDefineExpression(null, token));
+            StateController.var(analyzer, this::pushExpression);
+            return false;
         } else if (stream.get().getType() == TokenType.VAL) {
-            if (!stream.hasNext())
-                throw new RuntimeException();
-
-            stream.next();
-            if (!stream.hasNext())
-                throw new RuntimeException();
-
-            Token token = stream.next();
-            if (token.getType() != TokenType.IDENTIFY)
-                throw new RuntimeException();
-
-            pushExpression(new ValueDefineExpression(null, token));
+            StateController.val(analyzer, this::pushExpression);
+            return false;
         } else {
             return false;
         }
@@ -229,26 +222,14 @@ public class ExpressionState implements State {
 
     Expression popExpression() {
         if (sizeExpressions() <= 0)
-            throw new IllegalStateException("Не должно быть вызвано");
+            throw new IllegalStateException("This method should not be called. Provide the developer with information about the context in which the error is thrown");
 
         Node node = this.analyzer.getNodes().pop();
 
         if (node instanceof Expression)
             return (Expression) node;
 
-        throw new IllegalStateException("Не должно быть вызвано");
-    }
-
-    Expression peekExpression() {
-        if (sizeExpressions() <= 0)
-            throw new IllegalStateException("Не должно быть вызвано");
-
-        Node node = this.analyzer.getNodes().peek();
-
-        if (node instanceof Expression)
-            return (Expression) node;
-
-        throw new IllegalStateException("Не должно быть вызвано");
+        throw new IllegalStateException("This method should not be called. Provide the developer with information about the context in which the error is thrown");
     }
 
     int sizeContext() {
@@ -261,25 +242,25 @@ public class ExpressionState implements State {
 
     OperatorEntry popContext() {
         if (sizeContext() <= 0)
-            throw new IllegalStateException("Не должно быть вызвано");
+            throw new IllegalStateException("This method should not be called. Provide the developer with information about the context in which the error is thrown");
 
         Object object = this.analyzer.getContext().pop();
 
         if (object instanceof OperatorEntry)
             return (OperatorEntry) object;
 
-        throw new IllegalStateException("Не должно быть вызвано");
+        throw new IllegalStateException("This method should not be called. Provide the developer with information about the context in which the error is thrown");
     }
 
     OperatorEntry peekContext() {
         if (sizeContext() <= 0)
-            throw new IllegalStateException("Не должно быть вызвано");
+            throw new IllegalStateException("This method should not be called. Provide the developer with information about the context in which the error is thrown");
 
         Object object = this.analyzer.getContext().peek();
 
         if (object instanceof OperatorEntry)
             return (OperatorEntry) object;
 
-        throw new IllegalStateException("Не должно быть вызвано");
+        throw new IllegalStateException("This method should not be called. Provide the developer with information about the context in which the error is thrown");
     }
 }

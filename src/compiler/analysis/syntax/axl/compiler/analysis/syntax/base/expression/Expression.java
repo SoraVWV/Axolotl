@@ -1,7 +1,7 @@
-package axl.compiler.analysis.syntax.state.expression;
+package axl.compiler.analysis.syntax.base.expression;
 
 import axl.compiler.analysis.lexical.Token;
-import axl.compiler.analysis.syntax.state.Node;
+import axl.compiler.analysis.syntax.base.Node;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

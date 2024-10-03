@@ -2,7 +2,8 @@ package axl.compiler.analysis.syntax.ast;
 
 import axl.compiler.IFile;
 import axl.compiler.analysis.lexical.Token;
-import axl.compiler.analysis.syntax.state.expression.Expression;
+import axl.compiler.analysis.syntax.base.Node;
+import axl.compiler.analysis.syntax.base.expression.Expression;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,12 +11,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
-public class File {
+public class File implements Node {
 
     @Setter
     private IFile file;
+
+    @Setter
+    private List<Token> location;
 
     private final List<Import> imports = new ArrayList<>();
 
@@ -32,6 +37,14 @@ public class File {
 
         @NotNull
         private Boolean all;
+
+        @Override
+        public String toString() {
+            return "Import {" +
+                    "location=" +
+                    location.stream().map(Token::toString).collect(Collectors.joining(".")) + (all ? ".*" : "") +
+                    "}";
+        }
     }
 
     @Getter
@@ -49,5 +62,14 @@ public class File {
 
         @NotNull
         private final List<Expression> body = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return "File {" +
+                "location=" + String.join(".", location.stream().map(Object::toString).collect(Collectors.joining("."))) +
+                ",imports=[" +
+                imports.stream().map(Import::toString).collect(Collectors.joining(",")) +
+                "]}";
     }
 }

@@ -1,13 +1,13 @@
-package axl.compiler.analysis.syntax.state.expression.state;
+package axl.compiler.analysis.syntax.base.expression.state;
 
 import axl.compiler.analysis.lexical.TokenType;
 import axl.compiler.analysis.lexical.utils.TokenStream;
 import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
-import axl.compiler.analysis.syntax.state.State;
-import axl.compiler.analysis.syntax.state.expression.Expression;
-import axl.compiler.analysis.syntax.state.expression.MethodExpression;
+import axl.compiler.analysis.syntax.base.State;
+import axl.compiler.analysis.syntax.base.expression.MethodExpression;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class MethodExpressionState implements State {
@@ -15,14 +15,15 @@ public class MethodExpressionState implements State {
     private final DefaultSyntaxAnalyzer analyzer;
 
     @Nullable
-    private final Consumer<Expression> result;
+    private final Consumer<MethodExpression> result;
 
     private final MethodExpression method;
 
-    public MethodExpressionState(DefaultSyntaxAnalyzer analyzer, MethodExpression method, @Nullable Consumer<Expression> result) {
+    public MethodExpressionState(DefaultSyntaxAnalyzer analyzer, @Nullable Consumer<MethodExpression> result) {
         this.analyzer = analyzer;
         this.result = result;
-        this.method = method;
+        this.method = new MethodExpression(analyzer.getStream().next(), new ArrayList<>());
+        analyzer.getStream().next();
     }
 
     @Override
@@ -51,7 +52,6 @@ public class MethodExpressionState implements State {
             return;
         }
 
-        System.out.println(stream.get().getType());
         throw new RuntimeException();
     }
 }

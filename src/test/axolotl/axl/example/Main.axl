@@ -1,1 +1,46 @@
-var x = 5
+package axl.example
+
+event TestEvent(
+    val address: String
+    val port: String
+    var username: String
+)
+
+fn main(args: List<String>) {
+    emit TestEvent(
+        "0.0.0.0",
+        "2533",
+        "ШиЗоФрЕнИя"
+    )
+}
+
+on TestEvent(
+    address: String,
+    port: String,
+    username: String)
+filter (Int.of(port) > 1000) {
+    println("Можна. Добавляем")
+    // TODO добавляем
+}
+
+on TestEvent(
+    address: String,
+    port: String,
+    username: String)
+filter (Int.of(port) <= 1000) {
+    println("Незя. Пропускаем")
+}
+
+/*
+fn main(args: List<String>) {
+    for (i in 0..10) {
+        println("Hello, world!")
+    }
+
+    test()
+}
+
+fn test() {
+    println("Test")
+}
+*/

@@ -1,13 +1,11 @@
 package axl.compiler.analysis.syntax;
 
-import axl.compiler.Main;
 import axl.compiler.analysis.lexical.utils.TokenStream;
 import axl.compiler.analysis.syntax.ast.File;
-import axl.compiler.analysis.syntax.state.Node;
-import axl.compiler.analysis.syntax.state.expression.state.ExpressionState;
-import axl.compiler.analysis.syntax.state.declaration.FileState;
-import axl.compiler.analysis.syntax.state.State;
-import axl.compiler.analysis.syntax.state.expression.Expression;
+import axl.compiler.analysis.syntax.base.Node;
+import axl.compiler.analysis.syntax.base.expression.Expression;
+import axl.compiler.analysis.syntax.base.declaration.FileState;
+import axl.compiler.analysis.syntax.base.State;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -15,7 +13,6 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-import java.util.function.Consumer;
 
 @Getter
 @Setter
@@ -35,7 +32,7 @@ public class DefaultSyntaxAnalyzer implements SyntaxAnalyzer<File> {
 
     @Override
     public @NonNull File analyze() {
-        FileState fileState = new FileState();
+        FileState fileState = new FileState(this);
         states.push(fileState);
 
         while(!states.isEmpty() && stream.hasNext())
@@ -47,15 +44,6 @@ public class DefaultSyntaxAnalyzer implements SyntaxAnalyzer<File> {
         return fileState.build();
     }
 
-    public void test() {
-        while (stream.hasNext()) {
-            ExpressionState fileState = new ExpressionState(this, expression -> System.out.println(Main.formatString(expression)));
-
-            states.push(fileState);
-            while (!states.isEmpty()) {
-                states.peek().analyze();
-            }
-        }
-    }
+    private List<Expression> expr = new ArrayList<>();
 }
 

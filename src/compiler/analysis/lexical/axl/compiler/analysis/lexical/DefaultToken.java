@@ -30,4 +30,9 @@ public class DefaultToken implements Token {
                         this.offset + this.length
                 );
     }
+
+    @Override
+    public String toString() {
+        return type.toString();
+    }
 }
