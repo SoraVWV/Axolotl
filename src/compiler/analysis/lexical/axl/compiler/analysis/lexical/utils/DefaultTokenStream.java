@@ -4,6 +4,7 @@ import axl.compiler.IFile;
 import axl.compiler.analysis.lexical.Token;
 import axl.compiler.analysis.lexical.TokenType;
 import axl.compiler.analysis.lexical.Tokenizer;
+import axl.compiler.analysis.syntax.utils.IllegalSyntaxException;
 import lombok.Getter;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;

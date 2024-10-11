@@ -1,4 +1,4 @@
-package axl.compiler.analysis.syntax.base.expression.state;
+package axl.compiler.analysis.syntax.base.expression;
 
 import axl.compiler.IFile;
 import axl.compiler.analysis.lexical.Token;
@@ -7,10 +7,12 @@ import axl.compiler.analysis.lexical.TokenType;
 import axl.compiler.analysis.lexical.utils.Frame;
 import axl.compiler.analysis.lexical.utils.TokenStream;
 import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
+import axl.compiler.analysis.syntax.ast.expression.Expression;
+import axl.compiler.analysis.syntax.ast.expression.IdentifyExpression;
+import axl.compiler.analysis.syntax.ast.expression.LiteralExpression;
 import axl.compiler.analysis.syntax.base.Node;
 import axl.compiler.analysis.syntax.base.State;
 import axl.compiler.analysis.syntax.base.StateController;
-import axl.compiler.analysis.syntax.base.expression.*;
 import axl.compiler.analysis.syntax.utils.IllegalSyntaxException;
 import lombok.Getter;
 import lombok.Setter;
@@ -64,7 +66,7 @@ public class ExpressionState implements State {
                 switch (stream.get().getType()) {
                     case SEMI:
                         stream.next();
-                    case COMMA:
+                    case COMMA, RIGHT_BRACE:
                         break main;
                 }
                 OperatorEntry entry = findOperator(stream.getFile(), stream.next());
@@ -139,7 +141,6 @@ public class ExpressionState implements State {
             result.accept(popExpression());
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private boolean findPrimary(TokenStream stream) {
         if (getLastExpression()) {
             if (parents == 0 && square == 0)
@@ -161,7 +162,7 @@ public class ExpressionState implements State {
             }
 
             stream.decrement();
-            StateController.method(analyzer, methodExpression -> {
+            StateController.methodCall(analyzer, methodExpression -> {
                 pushExpression(methodExpression);
                 setLastExpression(true);
             });

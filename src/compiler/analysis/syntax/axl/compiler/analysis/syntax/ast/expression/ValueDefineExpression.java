@@ -1,4 +1,4 @@
-package axl.compiler.analysis.syntax.base.expression;
+package axl.compiler.analysis.syntax.ast.expression;
 
 import axl.compiler.analysis.lexical.Token;
 import axl.compiler.analysis.syntax.ast.Type;
@@ -10,10 +10,10 @@ import org.jetbrains.annotations.Nullable;
 
 @Getter
 @AllArgsConstructor
-public final class VariableDefineExpression extends Expression {
+public final class ValueDefineExpression extends Expression {
 
-    @Setter
     @Nullable
+    @Setter
     private Type type;
 
     @NotNull
@@ -21,8 +21,9 @@ public final class VariableDefineExpression extends Expression {
 
     @Override
     public String toString() {
-        return "VariableDefineExpression {" +
+        return "ValueDefineExpression {" +
                 "name=" + name.getType() +
+                ",type=" + type +
                 '}';
     }
 }

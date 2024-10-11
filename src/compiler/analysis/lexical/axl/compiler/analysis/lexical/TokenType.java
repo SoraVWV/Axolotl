@@ -18,7 +18,8 @@ public enum TokenType {
     COMMA(TokenGroup.DELIMITER, ","),
     DOT(TokenGroup.DELIMITER, "."),
     SEMI(TokenGroup.DELIMITER, ";"),
-    TYPE(TokenGroup.DELIMITER, ":"),
+    COLON(TokenGroup.DELIMITER, ":"),
+    IMPLICATION(TokenGroup.DELIMITER, "->"),
 
     PLUS(TokenGroup.OPERATOR, "+"),
     MINUS(TokenGroup.OPERATOR, "-"),
@@ -72,10 +73,12 @@ public enum TokenType {
     ANNOTATION(TokenGroup.KEYWORD, "annotation"),
     INTERFACE(TokenGroup.KEYWORD, "interface"),
     REF(TokenGroup.KEYWORD, "ref"),
+    STRUCT(TokenGroup.KEYWORD, "struct"),
     EXTENDS(TokenGroup.KEYWORD, "extends"),
     IMPLEMENTS(TokenGroup.KEYWORD, "implements"),
     EVENT(TokenGroup.KEYWORD, "event"),
     EMIT(TokenGroup.KEYWORD, "emit"),
+    ON(TokenGroup.KEYWORD, "on"),
 
     FN(TokenGroup.KEYWORD, "fn"),
     RETURN(TokenGroup.KEYWORD, "return"),

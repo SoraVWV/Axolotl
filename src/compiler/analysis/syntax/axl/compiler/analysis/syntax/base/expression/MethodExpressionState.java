@@ -1,10 +1,10 @@
-package axl.compiler.analysis.syntax.base.expression.state;
+package axl.compiler.analysis.syntax.base.expression;
 
 import axl.compiler.analysis.lexical.TokenType;
 import axl.compiler.analysis.lexical.utils.TokenStream;
 import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
 import axl.compiler.analysis.syntax.base.State;
-import axl.compiler.analysis.syntax.base.expression.MethodExpression;
+import axl.compiler.analysis.syntax.ast.expression.MethodExpression;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

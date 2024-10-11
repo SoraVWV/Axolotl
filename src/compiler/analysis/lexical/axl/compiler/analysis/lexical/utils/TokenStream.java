@@ -2,6 +2,7 @@ package axl.compiler.analysis.lexical.utils;
 
 import axl.compiler.IFile;
 import axl.compiler.analysis.lexical.Token;
+import axl.compiler.analysis.lexical.TokenType;
 import lombok.NonNull;
 
 import java.util.List;

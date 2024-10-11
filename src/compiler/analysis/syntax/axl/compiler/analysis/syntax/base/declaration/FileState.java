@@ -7,6 +7,7 @@ import axl.compiler.analysis.lexical.utils.TokenStream;
 import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
 import axl.compiler.analysis.syntax.ast.File;
 import axl.compiler.analysis.syntax.base.State;
+import axl.compiler.analysis.syntax.base.StateController;
 import axl.compiler.analysis.syntax.utils.IllegalSyntaxException;
 import axl.compiler.analysis.syntax.utils.StateUtils;
 import lombok.SneakyThrows;
@@ -36,9 +37,30 @@ public class FileState implements State {
         if (file.getLocation() == null)
             setup();
 
+        // TODO annotations
+
+        Token token = stream.get();
+        switch (token.getType()) {
+            case FN -> {
+                StateController.function(analyzer, file.getFunctions()::add);
+                return;
+            }
+            case REF -> {
+                // TODO classes
+            }
+            case EVENT -> {
+                // TODO events
+            }
+            case ON -> {
+                // TODO listeners
+            }
+            case STRUCT -> {
+                // TODO structures
+            }
+        }
+
         if (stream.hasNext())
             throw new IllegalSyntaxException("Undefined token", stream);
-        // TODO functions, classes, structs, events, listeners
     }
 
     private void setup() {

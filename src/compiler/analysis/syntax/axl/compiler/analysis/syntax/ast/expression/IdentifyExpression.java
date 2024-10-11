@@ -1,20 +1,18 @@
-package axl.compiler.analysis.syntax.base.expression;
+package axl.compiler.analysis.syntax.ast.expression;
 
 import axl.compiler.analysis.lexical.Token;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
-@Getter
 @AllArgsConstructor
-public final class LiteralExpression extends Expression {
+public final class IdentifyExpression extends Expression {
 
     @NotNull
     private final Token value;
 
     @Override
     public String toString() {
-        return "LiteralExpression {" +
+        return "IdentifyExpression {" +
                 "value=" + value.getType() +
                 '}';
     }

@@ -15,18 +15,18 @@ public class StateUtils {
         List<Token> result = new ArrayList<>();
 
         if (!stream.hasNext())
-            throw new IllegalSyntaxException("Invalid location", stream);
+            throw new IllegalSyntaxException("Unknown token", stream);
 
         Token token = stream.next();
         if (token.getType() != TokenType.IDENTIFY)
-            throw new IllegalSyntaxException("Invalid location", stream.back());
+            throw new IllegalSyntaxException("Unknown token", stream.back());
 
         result.add(token);
         while (stream.hasNext() && stream.get().getType() == TokenType.DOT) {
             stream.next();
 
             if (!stream.hasNext())
-                throw new IllegalSyntaxException("Invalid location", stream);
+                throw new IllegalSyntaxException("Unknown token", stream);
 
             token = stream.get();
             if (token.getType() == TokenType.MULTIPLY) {
@@ -40,7 +40,7 @@ public class StateUtils {
                 continue;
             }
 
-            throw new IllegalSyntaxException("Invalid location", stream.back());
+            throw new IllegalSyntaxException("Unknown token", stream.back());
         }
         return result;
     }

@@ -1,10 +1,10 @@
-package axl.compiler.analysis.syntax.base.expression.state;
+package axl.compiler.analysis.syntax.base.expression;
 
 import axl.compiler.analysis.lexical.Token;
 import axl.compiler.analysis.lexical.TokenType;
 import axl.compiler.analysis.syntax.base.State;
-import axl.compiler.analysis.syntax.base.expression.ArrayExpression;
-import axl.compiler.analysis.syntax.base.expression.Expression;
+import axl.compiler.analysis.syntax.ast.expression.ArrayExpression;
+import axl.compiler.analysis.syntax.ast.expression.Expression;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

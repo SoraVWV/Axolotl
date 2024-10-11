@@ -1,5 +1,6 @@
 package axl.compiler;
 
+import axl.compiler.analysis.lexical.utils.Frame;
 import axl.compiler.analysis.lexical.utils.TokenStream;
 import axl.compiler.analysis.syntax.DefaultSyntaxAnalyzer;
 import lombok.SneakyThrows;

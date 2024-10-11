@@ -3,11 +3,11 @@ package axl.compiler.analysis.syntax.ast;
 import axl.compiler.IFile;
 import axl.compiler.analysis.lexical.Token;
 import axl.compiler.analysis.syntax.base.Node;
-import axl.compiler.analysis.syntax.base.expression.Expression;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,28 +48,40 @@ public class File implements Node {
     }
 
     @Getter
-    @AllArgsConstructor
     public static class Function {
 
         @NotNull
-        private final Token name;
+        @Setter
+        private Token name;
 
-        @NotNull
-        private final List<Type> genericTypes = new ArrayList<>();
+        @Nullable
+        @Setter
+        private Type returnType;
 
         @NotNull
         private final List<Argument> arguments = new ArrayList<>();
 
         @NotNull
-        private final List<Expression> body = new ArrayList<>();
+        private final List<Node> body = new ArrayList<>();
+
+        @Override
+        public String toString() {
+            return "Function {" +
+                    "name=" + name.getType() +
+                    ",return=" + returnType +
+                    ",args=[" + String.join(".", arguments.stream().map(Object::toString).collect(Collectors.joining(", "))) +
+                    "],body=[" +
+                    body.stream().map(Object::toString).collect(Collectors.joining(",")) +
+                    "]}";
+        }
     }
 
     @Override
     public String toString() {
         return "File {" +
                 "location=" + String.join(".", location.stream().map(Object::toString).collect(Collectors.joining("."))) +
-                ",imports=[" +
-                imports.stream().map(Import::toString).collect(Collectors.joining(",")) +
+                ",imports=[" + imports.stream().map(Import::toString).collect(Collectors.joining(",")) +
+                "],functions=[" + functions.stream().map(Function::toString).collect(Collectors.joining(",")) +
                 "]}";
     }
 }

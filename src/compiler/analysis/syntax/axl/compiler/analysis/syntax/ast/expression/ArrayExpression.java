@@ -1,4 +1,4 @@
-package axl.compiler.analysis.syntax.base.expression;
+package axl.compiler.analysis.syntax.ast.expression;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
