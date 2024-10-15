@@ -19,6 +19,7 @@ import axl.compiler.analysis.syntax.utils.IllegalSyntaxException;
 import axl.compiler.analysis.syntax.utils.StateUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -102,6 +103,15 @@ public class StateController {
     }
 
     public static void body(DefaultSyntaxAnalyzer analyzer, @NotNull List<Node> body) {
+        analyzer.getStates().push(new BodyState(analyzer, body));
+    }
+
+    public static void body(DefaultSyntaxAnalyzer analyzer, @NotNull Consumer<List<Node>> result) {
+        List<Node> body = new ArrayList<>();
+        custom(analyzer, () -> {
+            result.accept(body);
+            analyzer.getStates().pop();
+        });
         analyzer.getStates().push(new BodyState(analyzer, body));
     }
 

@@ -10,20 +10,17 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
-public class IfStatement implements Node {
+public class WhileStatement implements Node {
 
     private Expression expression;
 
     private List<Node> body;
 
-    private List<Node> elseBody;
-
     @Override
     public String toString() {
-        return "If {" +
+        return "While {" +
                 "expression=" + expression +
                 ",body=[" + body.stream().map(Object::toString).collect(Collectors.joining(",")) +
-                "],else=[" + elseBody.stream().map(Object::toString).collect(Collectors.joining(",")) +
                 "]}";
     }
 }

@@ -27,31 +27,39 @@ public class FunctionState implements State {
 
     @Override
     public void analyze() {
+        analyzer.getStates().pop();
         TokenStream stream = analyzer.getStream();
-        stream.next(); // skip "fn"
+        stream.next();
 
         File.Function function = new File.Function();
 
         function.setName(analyzer.eat(TokenType.IDENTIFY));
 
-        // TODO body without '{' '}'
         StateController.body(analyzer, function.getBody());
 
+        StateController.custom(analyzer, () -> {
+            analyzer.getStates().pop();
+            if (!analyzer.getStream().hasNext() ||
+                    analyzer.check(TokenType.FN) ||
+                    analyzer.check(TokenType.AT_SYMBOL) ||
+                    analyzer.check(TokenType.VAR) ||
+                    analyzer.check(TokenType.VAL) ||
+                    analyzer.check(TokenType.STRUCT) ||
+                    analyzer.check(TokenType.REF) ||
+                    analyzer.check(TokenType.ON) ||
+                    analyzer.check(TokenType.EVENT)
+            ) analyzer.getStates().pop();
+        });
         // return type
         StateController.custom(analyzer, () -> {
             analyzer.getStates().pop();
-            if (analyzer.check(TokenType.IMPLICATION)) {
-                analyzer.getStream().next();
+            if (analyzer.boolEat(TokenType.IMPLICATION))
                 StateController.type(analyzer, function::setReturnType);
-            }
         });
-
-        // parse args
         argumentsState(function.getArguments());
-
         StateController.custom(analyzer, () -> {
-            result.accept(function);
             analyzer.getStates().pop();
+            result.accept(function);
         });
     }
 
@@ -72,6 +80,9 @@ public class FunctionState implements State {
                     StateController.type(analyzer, type -> arguments.add(new Argument(type, name)));
                     return;
                 }
+
+                if (analyzer.boolEat(TokenType.COMMA))
+                    return;
 
                 analyzer.eat(TokenType.RIGHT_PARENT);
                 analyzer.getStates().pop();

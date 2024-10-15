@@ -70,8 +70,7 @@ public class File implements Node {
                     "name=" + name.getType() +
                     ",return=" + returnType +
                     ",args=[" + String.join(".", arguments.stream().map(Object::toString).collect(Collectors.joining(", "))) +
-                    "],body=[" +
-                    body.stream().map(Object::toString).collect(Collectors.joining(",")) +
+                    "],body=[" + body.stream().map(Object::toString).collect(Collectors.joining(",")) +
                     "]}";
         }
     }

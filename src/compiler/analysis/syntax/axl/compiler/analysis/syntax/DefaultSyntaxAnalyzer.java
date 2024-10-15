@@ -12,7 +12,6 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
@@ -38,7 +37,7 @@ public class DefaultSyntaxAnalyzer implements SyntaxAnalyzer<File> {
         FileState fileState = new FileState(this);
         states.push(fileState);
 
-        while(!states.isEmpty() && stream.hasNext()) {
+        while(states.size() > 1 || stream.hasNext()) {
 //            Thread.sleep(100);
 //            System.out.println(Arrays.toString(getStates().toArray()));
 //            System.out.println(Arrays.toString(getNodes().toArray()));

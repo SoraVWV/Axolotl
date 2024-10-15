@@ -14,13 +14,15 @@ public class Main {
 
     @SneakyThrows
     public static void main(String[] args) {
+//        System.setProperty("org.graphstream.ui", );
         File fileAXL = new File(args[0]);
         String filename = fileAXL.getName();
         String content = Files.readString(fileAXL.toPath());
         file = new axl.compiler.File(filename, content);
 
         TokenStream stream = file.createTokenStream();
-        System.out.println(formatString(new DefaultSyntaxAnalyzer(stream).analyze()));
+        String ast = new DefaultSyntaxAnalyzer(stream).analyze().toString();
+        System.out.println(formatString(ast));
     }
 
     public static String formatString(Object obj) {

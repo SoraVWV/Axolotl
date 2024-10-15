@@ -7,6 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@SuppressWarnings("ALL")
 public class ReturnStatement implements Node {
 
     private final Expression expression;

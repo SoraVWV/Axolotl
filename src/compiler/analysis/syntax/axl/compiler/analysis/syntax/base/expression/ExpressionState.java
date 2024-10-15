@@ -151,6 +151,8 @@ public class ExpressionState implements State {
 
         if (stream.get().getType().getGroup() == TokenGroup.LITERAL) {
             pushExpression(new LiteralExpression(stream.next()));
+        } else if (stream.get().getType() == TokenType.TRUE || stream.get().getType() == TokenType.FALSE) {
+            pushExpression(new LiteralExpression(stream.next()));
         } else if (stream.get().getType() == TokenType.IDENTIFY) {
             Token name = stream.next();
             Frame frame = stream.createFrame();
@@ -223,14 +225,14 @@ public class ExpressionState implements State {
 
     Expression popExpression() {
         if (sizeExpressions() <= 0)
-            throw new IllegalStateException("This method should not be called. Provide the developer with information about the context in which the error is thrown");
+            throw new IllegalSyntaxException("Invalid expression", analyzer.getStream());
 
         Node node = this.analyzer.getNodes().pop();
 
         if (node instanceof Expression)
             return (Expression) node;
 
-        throw new IllegalStateException("This method should not be called. Provide the developer with information about the context in which the error is thrown");
+        throw new IllegalSyntaxException("Invalid expression", analyzer.getStream());
     }
 
     int sizeContext() {
@@ -243,25 +245,25 @@ public class ExpressionState implements State {
 
     OperatorEntry popContext() {
         if (sizeContext() <= 0)
-            throw new IllegalStateException("This method should not be called. Provide the developer with information about the context in which the error is thrown");
+            throw new IllegalSyntaxException("Invalid expression", analyzer.getStream());
 
         Object object = this.analyzer.getContext().pop();
 
         if (object instanceof OperatorEntry)
             return (OperatorEntry) object;
 
-        throw new IllegalStateException("This method should not be called. Provide the developer with information about the context in which the error is thrown");
+        throw new IllegalSyntaxException("Invalid expression", analyzer.getStream());
     }
 
     OperatorEntry peekContext() {
         if (sizeContext() <= 0)
-            throw new IllegalStateException("This method should not be called. Provide the developer with information about the context in which the error is thrown");
+            throw new IllegalSyntaxException("Invalid expression", analyzer.getStream());
 
         Object object = this.analyzer.getContext().peek();
 
         if (object instanceof OperatorEntry)
             return (OperatorEntry) object;
 
-        throw new IllegalStateException("This method should not be called. Provide the developer with information about the context in which the error is thrown");
+        throw new IllegalSyntaxException("Invalid expression", analyzer.getStream());
     }
 }

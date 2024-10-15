@@ -5,34 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee1cdc1a-7e10-4f2f-a713-1e6c2a15d5c8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/declaration/FunctionState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/statement/BodyState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/statement/StatementState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/statement/ast/IfStatement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/statement/ast/ReturnStatement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/statement/ast/WhileStatement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/TokenType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/utils/DefaultTokenStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/utils/DefaultTokenStream.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/utils/TokenStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/lexical/axl/compiler/analysis/lexical/utils/TokenStream.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/DefaultSyntaxAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/DefaultSyntaxAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/SyntaxAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/SyntaxAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/Argument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/Argument.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/File.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/File.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/StateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/StateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/declaration/FileState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/declaration/FileState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/ArrayExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/ArrayExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/Expression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/IdentifyExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/IdentifyExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/LiteralExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/LiteralExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/MethodExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/MethodExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/ValueDefineExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/ValueDefineExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/VariableDefineExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/ast/expression/VariableDefineExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/state/ExpressionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/ExpressionState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/state/MethodExpressionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/MethodExpressionState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/state/Operator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/Operator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/state/OperatorEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/OperatorEntry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/state/OperatorGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/OperatorGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/utils/StateUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/utils/StateUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/declaration/FunctionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/declaration/FunctionState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/ExpressionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/expression/ExpressionState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/statement/BodyState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/statement/BodyState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/statement/ast/IfStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/statement/ast/IfStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/statement/ast/ReturnStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/analysis/syntax/axl/compiler/analysis/syntax/base/statement/ast/ReturnStatement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/compiler/entry/axl/compiler/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/compiler/entry/axl/compiler/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/axolotl/axl/example/Main.axl" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/axolotl/axl/example/Main.axl" afterDir="false" />
     </list>
@@ -81,23 +63,23 @@
     <option name="sortByType" value="true" />
     <option name="sortKey" value="BY_TYPE" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Test.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/sora/Документы/GitHub/Axolotl&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Test.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/sora/Документы/GitHub/Axolotl",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -141,11 +123,17 @@
       <workItem from="1728047259731" duration="2514000" />
       <workItem from="1728120601860" duration="44000" />
       <workItem from="1728479083027" duration="2473000" />
-      <workItem from="1728578310667" duration="9551000" />
+      <workItem from="1728578310667" duration="10422000" />
+      <workItem from="1728767179463" duration="136000" />
+      <workItem from="1728809760497" duration="20555000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

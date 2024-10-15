@@ -1,11 +1,24 @@
 package axl.example
 
-fn sq(a: Int) -> Int {
+/*
+ ToDo функции
+ Необходимы в случае, когда какой-либо функционал
+ стоит разработать позже, но сигнатура необходима
+ в данный момент. При вызове выдаст исключение.
+*/
+fn test() -> Int
+
+fn sq1(a: Int) {
     return a * a
 }
 
-/*
-fn main(args: List) -> Void {
-    println("Hello, world")
+fn sq2(a: Int) {
+    return a * a;
 }
-*/
+
+fn sq3(a: Int) -> Int {
+    return a * a;
+}
+
+
+
